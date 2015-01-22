@@ -61,12 +61,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GameContent\Game\Entities\EntityBase.cs" />
+    <Compile Include="GameContent\Game\Entities\BaseEntity.cs" />
     <Compile Include="GameContent\Game\Entities\Pancake.cs" />
     <Compile Include="GameContent\Game\Entities\PlayerPan.cs" />
     <Compile Include="GameContent\Game\PanGame.cs" />
     <Compile Include="GameContent\Game\MainGameState.cs" />
     <Compile Include="GameContent\Game\PanGameArgs.cs" />
+    <Compile Include="GameContent\Game\PanWorld.cs" />
+    <Compile Include="GameContent\Game\WorldCamera.cs" />
     <Compile Include="GameContent\LaunchGameState.cs" />
     <Compile Include="GameContent\MainMenu\MainMenuGameState.cs" />
     <Compile Include="Program.cs" />

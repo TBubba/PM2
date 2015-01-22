@@ -9,10 +9,12 @@ using BubbasEngine.Engine.Graphics.Drawables;
 using BubbasEngine.Engine.Content;
 using BubbasEngine.Engine.Graphics;
 using BubbasEngine.Engine.Graphics.Drawables.Shapes;
+using SFML.Graphics;
+using SFML.Window;
 
 namespace PM2.GameContent.Game.Entities
 {
-    internal class Pancake : GameObject, IGameCreated, IGameStep, IGameAnimate, IGameRemoved
+    internal class Pancake : BaseEntity, IGameCreated, IGameStep, IGameAnimate, IGameRemoved
     {
         // Private
         private BCircleShape _shape;
@@ -20,18 +22,25 @@ namespace PM2.GameContent.Game.Entities
         // Constructor(s)
         internal Pancake(Vector2 pos)
         {
-            _shape = new BCircleShape(35f);
         }
 
         // Content & Graphics
-        internal void GetContent(ContentManager content)
+        internal override void GetContent(ContentManager content)
         {
-            // Create sprite
+            // Create pancake circle shape
+            _shape = new BCircleShape(105f, 32);
+            _shape.Position = GetWorld().Camera.Size / 2f;
+            _shape.Origin = new Vector2f(_shape.Radius, _shape.Radius);
         }
-        internal void AddDrawables(GraphicsRenderer graphics)
+        internal override void AddDrawables(GraphicsRenderer graphics)
         {
             // Add drawables
             graphics.AddDrawable(_shape, 0);
+        }
+        internal override void RemoveDrawables(GraphicsRenderer graphics)
+        {
+            // Add drawables
+            graphics.RemoveDrawable(_shape, 0);
         }
 
         //
@@ -43,7 +52,12 @@ namespace PM2.GameContent.Game.Entities
         }
         public void Animate(float delta)
         {
-            // Size pancake
+            //
+            _shape.Position = new Vector2f(_position.X, _position.Y) + GetWorld().Camera.RelativePosition();
+
+            // Scale pancake
+            _shape.Scale = new Vector2f(_shape.Scale.X, 
+                _position.Y / GetWorld().Camera.Size.Y);
         }
         public void Removed()
         {

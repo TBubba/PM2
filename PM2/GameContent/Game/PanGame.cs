@@ -12,12 +12,30 @@ namespace PM2.GameContent.Game
     internal class PanGame
     {
         // Private
-        private GameWorld _world;
+        private PanWorld _world;
+        private bool _running;
+
+        private Random _random;
 
         // Constructor(s)
         internal PanGame(PanGameArgs args)
         {
-            _world = new GameWorld();
+            //
+            _world = new PanWorld();
+            _running = true;
+
+            //
+            _random = new Random();
+        }
+
+        // Run
+        internal void Run()
+        {
+            _running = true;
+        }
+        internal void Pause()
+        {
+            _running = false;
         }
 
         // Create
@@ -32,6 +50,7 @@ namespace PM2.GameContent.Game
 
         internal void SpawnPancake()
         {
+
         }
 
         // Content
@@ -47,15 +66,18 @@ namespace PM2.GameContent.Game
         // Game Loop
         internal void BeginFrame()
         {
-            _world.BeginFrame();
+            if (_running)
+                _world.BeginFrame();
         }
         internal void Step()
         {
-            _world.Step();
+            if (_running)
+                _world.Step();
         }
         internal void Animate(float delta)
         {
-            _world.Animate(delta);
+            if (_running)
+                _world.Animate(delta);
         }
     }
 }
