@@ -4,8 +4,9 @@ using System.Linq;
 using System.Text;
 using BubbasEngine.Engine.GameWorlds;
 using BubbasEngine.Engine.Content;
-using BubbasEngine.Engine.Physics.Common;
 using PM2.GameContent.Game.Entities;
+using SFML.Window;
+using BubbasEngine.Engine.Graphics;
 
 namespace PM2.GameContent.Game
 {
@@ -28,6 +29,13 @@ namespace PM2.GameContent.Game
             _random = new Random();
         }
 
+        // Initialize
+        internal void Initialize(ContentManager content, GraphicsRenderer graphics)
+        {
+            // Initialize world
+            _world.Initialize(content, graphics);
+        }
+
         // Run
         internal void Run()
         {
@@ -39,7 +47,7 @@ namespace PM2.GameContent.Game
         }
 
         // Create
-        internal void CreatePancake(Vector2 position)
+        internal void CreatePancake(Vector2f position)
         {
             _world.Entities.Add(new Pancake(position));
         }

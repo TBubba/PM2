@@ -14,13 +14,14 @@ using SFML.Window;
 
 namespace PM2.GameContent.Game.Entities
 {
-    internal class Pancake : BaseEntity, IGameCreated, IGameStep, IGameAnimate, IGameRemoved
+    internal class Pancake : BaseEntity
     {
         // Private
         private BCircleShape _shape;
         
         // Constructor(s)
-        internal Pancake(Vector2 pos)
+        internal Pancake(Vector2f position)
+            : base (position)
         {
         }
 
@@ -28,9 +29,14 @@ namespace PM2.GameContent.Game.Entities
         internal override void GetContent(ContentManager content)
         {
             // Create pancake circle shape
-            _shape = new BCircleShape(105f, 32);
+            _shape = new BCircleShape(45f, 32);
             _shape.Position = GetWorld().Camera.Size / 2f;
             _shape.Origin = new Vector2f(_shape.Radius, _shape.Radius);
+            _shape.FillColor = Color.Yellow;
+        }
+        internal override void RemoveContent(ContentManager content)
+        {
+
         }
         internal override void AddDrawables(GraphicsRenderer graphics)
         {
@@ -44,22 +50,22 @@ namespace PM2.GameContent.Game.Entities
         }
 
         //
-        public void Created()
+        internal override void OnCreated()
         {
         }
-        public void Step()
+        internal override void OnStep()
         {
         }
-        public void Animate(float delta)
+        internal override void OnAnimate(float delta)
         {
             //
             _shape.Position = new Vector2f(_position.X, _position.Y) + GetWorld().Camera.RelativePosition();
 
             // Scale pancake
-            _shape.Scale = new Vector2f(_shape.Scale.X, 
-                _position.Y / GetWorld().Camera.Size.Y);
+            _shape.Scale = new Vector2f(_shape.Scale.X,
+                Math.Max(Math.Abs((_position.Y - GetWorld().Camera.Size.Y / 2f) / GetWorld().Camera.Size.Y * 0.45f), 0.02f));
         }
-        public void Removed()
+        internal override void OnRemoved()
         {
         }
     }

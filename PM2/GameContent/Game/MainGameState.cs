@@ -11,7 +11,6 @@ using SFML.Window;
 using BubbasEngine.Engine;
 using SFML.Graphics;
 using BubbasEngine.Engine.Graphics.Drawables.Shapes;
-using BubbasEngine.Engine.Physics.Common;
 
 namespace PM2.GameContent.Game
 {
@@ -38,13 +37,16 @@ namespace PM2.GameContent.Game
             _mouse = new MouseBindingCollection();
             _mouse.AddOnPressed(Mouse.Button.Left, new MouseButtonBinding((x, y) =>
             {
-                _game.CreatePancake(new Vector2(x, y));
+                _game.CreatePancake(new Vector2f(x, y));
             }));
         }
 
         //
         public override void LoadContent()
         {
+            // Initialize game
+            _game.Initialize(_content, _graphics);
+
             // Define content paths
             const string panPath = @"GameContent\Game\Pans\StandardPan.png";
 

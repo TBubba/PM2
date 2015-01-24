@@ -4,6 +4,9 @@ using System.Linq;
 using System.Text;
 using BubbasEngine.Engine.GameWorlds;
 using SFML.Window;
+using PM2.GameContent.Game.Entities;
+using BubbasEngine.Engine.Graphics;
+using BubbasEngine.Engine.Content;
 
 namespace PM2.GameContent.Game
 {
@@ -11,6 +14,9 @@ namespace PM2.GameContent.Game
     {
         // Private
         private WorldCamera _camera;
+
+        private ContentManager _content;
+        private GraphicsRenderer _graphics;
 
         // Internal
         internal WorldCamera Camera
@@ -20,6 +26,35 @@ namespace PM2.GameContent.Game
         internal PanWorld()
         {
             _camera = new WorldCamera();
+        }
+
+        //
+        internal void Initialize(ContentManager content, GraphicsRenderer graphics)
+        {
+            // Keep references
+            _content = content;
+            _graphics = graphics;
+
+            // EntityContainer Events
+            Entities.OnEntityAdded += OnEntityAdded;
+            Entities.OnEntityRemoved += OnEntityRemoved;
+
+            // Camera
+            _camera.Size = new Vector2f(graphics.RenderWidth, graphics.RenderHeight);
+        }
+
+        //
+        private void OnEntityAdded(GameObject obj)
+        {
+            BaseEntity ent = (BaseEntity)obj;
+            ent.GetContent(_content);
+            ent.AddDrawables(_graphics);
+        }
+        private void OnEntityRemoved(GameObject obj)
+        {
+            BaseEntity ent = (BaseEntity)obj;
+            ent.RemoveContent(_content);
+            ent.RemoveDrawables(_graphics);
         }
     }
 }

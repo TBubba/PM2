@@ -5,6 +5,8 @@ using System.Text;
 
 namespace BubbasEngine.Engine.GameWorlds
 {
+    public delegate void EntityEventDelegate(GameObject obj);
+
     public class EntityContainer
     {
         // Private
@@ -14,6 +16,10 @@ namespace BubbasEngine.Engine.GameWorlds
         // Public
         public int Count
         { get { return _entities.Count; } }
+
+        // Events
+        public event EntityEventDelegate OnEntityAdded;
+        public event EntityEventDelegate OnEntityRemoved;
 
         // Container
         public GameObject this[int index]
@@ -54,6 +60,10 @@ namespace BubbasEngine.Engine.GameWorlds
             //
             _world.OnEntityAdded(entity);
 
+            // Call event
+            if (OnEntityAdded != null)
+                OnEntityAdded(entity);
+
             // Success
             return true;
         }
@@ -79,6 +89,10 @@ namespace BubbasEngine.Engine.GameWorlds
 
             // 
             _world.OnEntityRemoved(entity);
+
+            // Call event
+            if (OnEntityRemoved != null)
+                OnEntityRemoved(entity);
 
             // Success
             return true;
