@@ -20,6 +20,7 @@ namespace BubbasEngine.Engine.GameWorlds
         private Action _beginFrame;
 
         private PhysicsWorld _physicsWorld;
+        private float _stepTime;
 
         // Public
         public EntityContainer Entities
@@ -27,14 +28,18 @@ namespace BubbasEngine.Engine.GameWorlds
         public PhysicsWorld PhysicsWorld
         { get { return _physicsWorld; } }
 
+        public float StepTime
+        { get { return _stepTime; } set { _stepTime = value; } }
+
         // Constructor(s)
-        public GameWorld()
+        public GameWorld(float stepTime)
         {
             // Create containe
             _entities = new EntityContainer(this);
             
             //
             _physicsWorld = new PhysicsWorld(new Physics.Common.Vector2());
+            _stepTime = stepTime;
         }
 
         // Game Loop
@@ -54,6 +59,9 @@ namespace BubbasEngine.Engine.GameWorlds
         {
             // Call Step
             CallStep();
+
+            // Physics step
+            _physicsWorld.Step(_stepTime);
         }
         public void Animate(float delta)
         {
@@ -93,7 +101,7 @@ namespace BubbasEngine.Engine.GameWorlds
             if (entity is IGameCreated) // Created
                 _beginFrame += ((IGameCreated)entity).Created;
             if (entity is IGamePhysics) // GetBody (Physics)
-                _beginFrame += delegate { _physicsWorld.AddBody(((IGamePhysics)entity).GetBody()); };
+                _beginFrame += delegate { ((IGamePhysics)entity).AddBody(_physicsWorld); };
         }
         private void RemoveEntityCalls(GameObject entity)
         {

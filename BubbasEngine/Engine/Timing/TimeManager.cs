@@ -6,7 +6,7 @@ using System.Diagnostics;
 
 namespace BubbasEngine.Engine.Timing
 {
-    internal class TimeManager
+    public class TimeManager
     {
         // Private
         private Stopwatch _watch;
@@ -16,7 +16,15 @@ namespace BubbasEngine.Engine.Timing
         private int _currentFrame;
         private double _frameAverage;
 
-        private bool _accumuate;
+        private bool _buffer; // If the engine can run multiple steps per gameloop to catch up
+
+        // Public
+        public int StepsPerSecond
+        { get { return _keeper.StepsPerSec; } }
+        public double TimeStep
+        { get { return _keeper.TimeStep; } }
+        public bool BufferSteps
+        { get { return _buffer; } }
 
         // Constructor(s)
         internal TimeManager(TimeManagerArgs args)
@@ -25,7 +33,7 @@ namespace BubbasEngine.Engine.Timing
             _keeper = new TimeKeeper(args.StepsPerSecond);
 
             _frames = new double[args.StepsPerSecond];
-            _accumuate = args.Accumulate;
+            _buffer = args.Accumulate;
         }
 
         // Frame
@@ -55,7 +63,7 @@ namespace BubbasEngine.Engine.Timing
             int count = _keeper.GetStepCount();
 
             // Return count
-            if (_accumuate)
+            if (_buffer)
                 return count;
             return (count == 0) ? 0 : 1;
         }

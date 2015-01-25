@@ -11,6 +11,8 @@ using BubbasEngine.Engine.Graphics;
 using BubbasEngine.Engine.Graphics.Drawables.Shapes;
 using SFML.Graphics;
 using SFML.Window;
+using BubbasEngine.Engine.Physics.Factories;
+using BubbasEngine.Engine.Physics.Dynamics;
 
 namespace PM2.GameContent.Game.Entities
 {
@@ -20,8 +22,12 @@ namespace PM2.GameContent.Game.Entities
         private BCircleShape _shape;
         
         // Constructor(s)
-        internal Pancake(Vector2f position)
-            : base (position)
+        internal Pancake()
+            : base()
+        {
+        }
+        internal Pancake(BodyData data)
+            : base(data)
         {
         }
 
@@ -58,15 +64,23 @@ namespace PM2.GameContent.Game.Entities
         }
         internal override void OnAnimate(float delta)
         {
+            Vector2f pos = new Vector2f(Body.Position.X, Body.Position.Y);
+
             //
-            _shape.Position = new Vector2f(_position.X, _position.Y) + GetWorld().Camera.RelativePosition();
+            _shape.Position = pos + GetWorld().Camera.RelativePosition();
 
             // Scale pancake
             _shape.Scale = new Vector2f(_shape.Scale.X,
-                Math.Max(Math.Abs((_position.Y - GetWorld().Camera.Size.Y / 2f) / GetWorld().Camera.Size.Y * 0.45f), 0.02f));
+                Math.Max(Math.Abs((pos.Y - GetWorld().Camera.Size.Y / 2f) / GetWorld().Camera.Size.Y * 0.45f), 0.02f));
         }
         internal override void OnRemoved()
         {
+        }
+
+        //
+        internal override Body CreateBody(PhysicsWorld world, BodyData data)
+        {
+            return BodyFactory.CreateRectangle(world, 10f, 1f, 1f, data.Position);
         }
     }
 }

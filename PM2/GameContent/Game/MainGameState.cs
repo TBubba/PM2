@@ -11,6 +11,7 @@ using SFML.Window;
 using BubbasEngine.Engine;
 using SFML.Graphics;
 using BubbasEngine.Engine.Graphics.Drawables.Shapes;
+using BubbasEngine.Engine.Physics.Common;
 
 namespace PM2.GameContent.Game
 {
@@ -24,28 +25,46 @@ namespace PM2.GameContent.Game
         // Constructor(s)
         internal MainGameState()
         {
-            // Game
-            _game = new PanGame(new PanGameArgs(){
-                Players = 1,
-                GameMode = 0
-                });
-
             // Keyboard
             _keys = new KeyboardBindingCollection();
 
             // Mouse
             _mouse = new MouseBindingCollection();
-            _mouse.AddOnPressed(Mouse.Button.Left, new MouseButtonBinding((x, y) =>
-            {
-                _game.CreatePancake(new Vector2f(x, y));
-            }));
         }
 
         //
         public override void LoadContent()
         {
             // Initialize game
+            _game = new PanGame(new PanGameArgs()
+            {
+                Players = 1,
+                GameMode = 0,
+                StepTime = _time.StepsPerSecond
+            });
+
             _game.Initialize(_content, _graphics);
+
+            //
+            _keys.AddOnPressed(Keyboard.Key.Escape,
+                new KeyboardBinding(new KeyboardInputDele(delegate
+                {
+                    // Pause or Resume
+                    if (_game.Running)
+                        _game.Pause();
+                    else
+                        _game.Run();
+                })));
+
+            //
+            _mouse.AddOnPressed(Mouse.Button.Left, new MouseButtonBinding((x, y) =>
+            {
+                _game.CreatePancake(new Vector2(x, y));
+            }));
+            _mouse.AddOnMoved(new MouseMoveBinding((x, y) =>
+            {
+                _game.Players[0].MoveTo(new Vector2(x, y));
+            }));
 
             // Define content paths
             const string panPath = @"GameContent\Game\Pans\StandardPan.png";

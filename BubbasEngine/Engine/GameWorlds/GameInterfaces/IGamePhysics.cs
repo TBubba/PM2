@@ -8,6 +8,6 @@ namespace BubbasEngine.Engine.GameWorlds.GameInterfaces
 {
     public interface IGamePhysics
     {
-        Body GetBody();
+        Body AddBody(PhysicsWorld world);
     }
 }

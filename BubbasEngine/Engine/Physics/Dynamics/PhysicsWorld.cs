@@ -1115,6 +1115,9 @@ namespace BubbasEngine.Engine.Physics.Dynamics
         /// <returns></returns>
         internal void AddBody(Body body)
         {
+            if (body == null)
+                throw new Exception("tried to add body with value null to world");
+
             Debug.Assert(!_bodyAddList.Contains(body), "You are adding the same body more than once.");
 
             if (!_bodyAddList.Contains(body))

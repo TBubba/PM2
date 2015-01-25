@@ -6,6 +6,7 @@ using BubbasEngine.Engine.Content;
 using BubbasEngine.Engine.Windows;
 using BubbasEngine.Engine.Input;
 using BubbasEngine.Engine.Graphics;
+using BubbasEngine.Engine.Timing;
 
 namespace BubbasEngine.Engine.GameStates
 {
@@ -26,6 +27,8 @@ namespace BubbasEngine.Engine.GameStates
         { get { return _engine.Window; } }
         protected GraphicsRenderer _graphics
         { get { return _engine.Graphics; } }
+        protected TimeManager _time
+        { get { return _engine.Time; } }
 
         // Constructor(s)
         public GameState()

@@ -62,6 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GameContent\Game\Entities\BaseEntity.cs" />
+    <Compile Include="GameContent\Game\Entities\BodyData.cs" />
     <Compile Include="GameContent\Game\Entities\Pancake.cs" />
     <Compile Include="GameContent\Game\Entities\PlayerPan.cs" />
     <Compile Include="GameContent\Game\PanGame.cs" />

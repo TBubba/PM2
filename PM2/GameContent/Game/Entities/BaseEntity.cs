@@ -7,25 +7,35 @@ using BubbasEngine.Engine.GameWorlds.GameInterfaces;
 using BubbasEngine.Engine.Content;
 using BubbasEngine.Engine.Graphics;
 using SFML.Window;
+using BubbasEngine.Engine.Physics.Common;
+using BubbasEngine.Engine.Physics.Dynamics;
+using BubbasEngine.Engine.Physics.Factories;
 
 namespace PM2.GameContent.Game.Entities
 {
-    internal class BaseEntity : GameObject, IGameCreated, IGameStep, IGameAnimate, IGameRemoved
+    internal class BaseEntity : GameObject, IGameCreated, IGamePhysics, IGameStep, IGameAnimate, IGameRemoved
     {
         // Private
-        protected Vector2f _position;
+        private Body _body;
+        private BodyData _bodyData;
+
+        private Vector2 _startPosition;
 
         private ContentManager _content;
         private GraphicsRenderer _graphics;
 
         // Internal
-        internal Vector2f Position
-        { get { return _position; } }
+        internal Body Body
+        { get { return _body; } }
 
         // Constructor(s)
-        internal BaseEntity(Vector2f position)
+        internal BaseEntity()
+            : this(new BodyData())
         {
-            _position = position;
+        }
+        internal BaseEntity(BodyData data)
+        {
+            _bodyData = data;
         }
 
         // World
@@ -59,11 +69,23 @@ namespace PM2.GameContent.Game.Entities
             // Remove drawables from renderer
         }
 
+        // Physics
+        internal void MoveTo(Vector2 position)
+        {
+            if (_body != null)
+                _body.Position = position;
+        }
+
         //
         public void Created()
         {
             //
             OnCreated();
+        }
+        public Body AddBody(PhysicsWorld world)
+        {
+            _body = CreateBody(world, _bodyData);
+            return _body;
         }
         public void Step()
         {
@@ -83,6 +105,12 @@ namespace PM2.GameContent.Game.Entities
 
             //
             OnRemoved();
+        }
+
+        //
+        internal virtual Body CreateBody(PhysicsWorld world, BodyData data)
+        {
+            return new Body(world, data.Position, data.Rotation);
         }
 
         //

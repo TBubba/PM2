@@ -7,6 +7,7 @@ using SFML.Window;
 using PM2.GameContent.Game.Entities;
 using BubbasEngine.Engine.Graphics;
 using BubbasEngine.Engine.Content;
+using BubbasEngine.Engine.Input;
 
 namespace PM2.GameContent.Game
 {
@@ -23,7 +24,8 @@ namespace PM2.GameContent.Game
         { get { return _camera; } }
 
         // Constructor(s)
-        internal PanWorld()
+        internal PanWorld(float stepTime)
+            : base(stepTime)
         {
             _camera = new WorldCamera();
         }

@@ -12,12 +12,16 @@ namespace PM2.GameContent.Game
         internal int Players;
         internal int Room;
 
+        internal float StepTime;
+
         // Constructor(s)
         internal PanGameArgs()
         {
             GameMode = 0;
             Players = 1;
             Room = 0;
+
+            StepTime = 1f / 60f;
         }
         internal PanGameArgs(PanGameArgs args)
         {
@@ -25,6 +29,8 @@ namespace PM2.GameContent.Game
             GameMode = args.GameMode;
             Players = args.Players;
             Room = args.Room;
+
+            StepTime = args.StepTime;
         }
     }
 }
