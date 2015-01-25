@@ -21,6 +21,7 @@ namespace BubbasEngine.Engine.Graphics
 
         private IntRect _flipScale; // Flip (Kind of a hacky way to get around negative scaling)
         private Vector2f _scale; // Scale between targets
+        private RectangleShape _renderFix; // Used to avoid a clearing bug
 
         // Public
         public uint RenderWidth
@@ -35,6 +36,7 @@ namespace BubbasEngine.Engine.Graphics
         internal GraphicsRenderer()
         {
             _layers = new Dictionary<int, GraphicsLayer>();
+            _renderFix = new RectangleShape(new Vector2f(0f, 0f)) { FillColor = new Color(0, 0, 0, 0) };
         }
       　
         // Drawables
@@ -159,6 +161,7 @@ namespace BubbasEngine.Engine.Graphics
             using (Sprite sprite = new Sprite(_proxy.Texture) { Scale = _scale, TextureRect = _flipScale })
             {
                 _target.Draw(sprite);
+                _target.Draw(_renderFix); // Forces SFML to clear (bug work-around)
             }
         }
 
