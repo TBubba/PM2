@@ -40,7 +40,7 @@ namespace PM2.GameContent.Game
 
             //
             _world = new PanWorld(args.StepTime);
-            _world.PhysicsWorld.Gravity = new Vector2(0f, 100f);
+            _world.PhysicsWorld.Gravity = new Vector2(0f, 0.001f);
 
             _running = true;
 
@@ -53,10 +53,10 @@ namespace PM2.GameContent.Game
         }
 
         // Initialize
-        internal void Initialize(ContentManager content, GraphicsRenderer graphics)
+        internal void Initialize(ContentManager content, GraphicsLayer layer)
         {
             // Initialize world
-            _world.Initialize(content, graphics);
+            _world.Initialize(content, layer);
 
             //
             int length = _args.Players;

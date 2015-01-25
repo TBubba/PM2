@@ -12,6 +12,11 @@ namespace BubbasEngine.Engine.Graphics.Drawables.Shapes
         // Protected
         protected Shape _shape;
         protected RenderStates _state;
+        protected int _depth;
+
+        // Public
+        public int Depth
+        { get { return _depth; } set { _depth = value; } }
 
         // Public
         public Color FillColor
@@ -60,10 +65,10 @@ namespace BubbasEngine.Engine.Graphics.Drawables.Shapes
 
         }
 
-        // Animate
-        internal override void Animate(float delta)
+        // Depth
+        internal override int GetDepth()
         {
-
+            return _depth;
         }
 
         // Draw

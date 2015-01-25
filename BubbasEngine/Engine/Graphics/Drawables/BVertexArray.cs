@@ -9,8 +9,9 @@ namespace BubbasEngine.Engine.Graphics.Drawables
     public class BVertexArray : Renderable
     {
         // Private
-        VertexArray _vertices;
-        RenderStates _state;
+        private VertexArray _vertices;
+        private RenderStates _state;
+        private int _depth; 
 
         // Public
         public Vertex this[uint index]
@@ -34,6 +35,9 @@ namespace BubbasEngine.Engine.Graphics.Drawables
 
         public Shader Shader
         { get { return _state.Shader; } }
+
+        public int Depth
+        { get { return _depth; } set { _depth = value; } }
 
         // Constructor(s)
         public BVertexArray()
@@ -68,10 +72,10 @@ namespace BubbasEngine.Engine.Graphics.Drawables
             _state.Shader = shader;
         }
 
-        // Animate
-        internal override void Animate(float delta)
+        // Depth
+        internal override int GetDepth()
         {
-
+            return _depth;
         }
 
         // Draw

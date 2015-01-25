@@ -15,6 +15,8 @@ namespace BubbasEngine.Engine.GameStates
         // Private
         internal protected GameEngine _engine
         { get; private set; }
+        protected GraphicsLayer _layer
+        { get; private set; }
 
         // Protected
         protected ContentManager _content
@@ -39,6 +41,14 @@ namespace BubbasEngine.Engine.GameStates
         internal void Setup(GameEngine engine)
         {
             _engine = engine;
+            _layer = _graphics.Layers.Create();
+        }
+
+        internal void OnRemoved()
+        {
+            // Remove layer
+            if (_graphics.Layers.Contains(_layer))
+                _graphics.Layers.Remove(_layer);
         }
 
         // Functions

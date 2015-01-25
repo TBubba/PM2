@@ -7,142 +7,49 @@ using SFML.Graphics;
 
 namespace BubbasEngine.Engine.Graphics
 {
-    internal class GraphicsLayer
+    public class GraphicsLayer
     {
         // Private
-        private Stack<Renderable> _drawables;
-        private Action<float> _animate;
-        private Action<RenderTarget> _draw;
+        private RenderableContainer _renderables;
+        private View _view;
+
+        private bool _hide;
+
+        // Public
+        public RenderableContainer Renderables
+        { get { return _renderables; } }
+        public View View
+        { get { return _view; } }
+
+        public bool Hide
+        { get { return _hide; } set { _hide = value; } }
 
         // Constructor(s)
         internal GraphicsLayer()
         {
-            _drawables = new Stack<Renderable>();
+            _renderables = new RenderableContainer();
+            _view = new View();
         }
 
-        // Drawable
-        internal bool AddDrawable(Renderable drawable)
+        // View
+        internal void SetView(View view)
         {
-            // Adding drawables that are already stored in this layer is not allowed
-            if (ContainsDrawable(drawable))
-            {
-                // Error
-                GameConsole.WriteLine(string.Format("{0}: Tried to add already stored drawable (Drawable {1})", GetType().Name, drawable.ToString()), GameConsole.MessageType.Warning); // Debug
-                return false;
-            }
-
-            // Add drawable
-            _drawables.Push(drawable);
-            _animate += drawable.Animate;
-            _draw += drawable.Draw;
-
-            // Succeeded
-            return true;
-        }
-        internal bool RemoveDrawable(Renderable drawable)
-        {
-            // Removing drawables that are not stored in this layer is impossible (Waste of CPU cycles to try) (Debug)
-            if (!ContainsDrawable(drawable))
-            {
-                // Error
-                GameConsole.WriteLine(string.Format("{0}: Tried to remove drawable that is not stored in this layer (Drawable {1})", GetType().Name, drawable.ToString()), GameConsole.MessageType.Error); // Debug
-                return false;
-            }
-
-            // Remove drawable
-            Remove(drawable);
-            _animate -= drawable.Animate;
-            _draw -= drawable.Draw;
-
-            // Succeeded
-            return true;
+            _view = view;
         }
 
-        // Container
-        private bool ContainsDrawable(Renderable drawable)
-        {
-            Stack<Renderable> stack = new Stack<Renderable>();
-            bool success = false;
-
-            // Look through all devices
-            int length = _drawables.Count;
-            for (int i = 0; i < length; i++)
-            {
-                // Get device ref and move it to the other stack
-                Renderable d = _drawables.Pop();
-                stack.Push(d);
-
-                // If it is what you're looking for stop looking
-                if (d == drawable)
-                {
-                    success = true;
-                    break;
-                }
-            }
-
-            // Move them back to the main stack
-            length = stack.Count;
-            for (int i = 0; i < length; i++)
-                _drawables.Push(stack.Pop());
-
-            // Return whether or not it was found
-            return success;
-        }
-        private bool Remove(Renderable drawable)
-        {
-            Stack<Renderable> stack = new Stack<Renderable>();
-            bool success = false;
-
-            // Look through all devices
-            int length = _drawables.Count;
-            for (int i = 0; i < length; i++)
-            {
-                // Get device
-                Renderable d = _drawables.Pop();
-
-                // If it is what you're looking for stop looking
-                if (d == drawable)
-                {
-                    success = true;
-                    break;
-                }
-
-                // Move device to other stack (Will be added to the main stack afterwards)
-                stack.Push(d);
-            }
-
-            // Move them back to the main stack
-            length = stack.Count;
-            for (int i = 0; i < length; i++)
-                _drawables.Push(stack.Pop());
-
-            // Return whether or not it was found
-            return success;
-        }
-
-        //
-        internal int GetDrawableCount()
-        {
-            return _drawables.Count;
-        }
-
-        //
-        internal void Animate(float delta)
-        {
-            if (_animate != null)
-                _animate(delta);
-        }
+        // Render
         internal void Render(RenderTarget target)
         {
-            if (_draw != null)
-                _draw(target);
+            // Abort if hidden
+            if (_hide)
+                return;
+
+            // Render
+            _renderables.Render(target);
         }
-        internal void Render(RenderTarget target, float delta)
+        internal void RenderTo(RenderTarget target)
         {
-            if (_draw != null)
-                _draw(target);
-            if (_animate != null)
-                _animate(delta);
+            _renderables.Render(target);
         }
     }
 }

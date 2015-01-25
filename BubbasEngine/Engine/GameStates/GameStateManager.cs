@@ -80,7 +80,7 @@ namespace BubbasEngine.Engine.GameStates
                 UnloadContent(state);
 
                 // Remove the state
-                _beginFrame += () => { _states.Remove(state); };
+                _beginFrame += () => { _states.Remove(state); state.OnRemoved(); };
 
                 // Debug
                 GameConsole.WriteLine(string.Format("GameState Removed: \"{0}\"", state.GetType().ToString()));

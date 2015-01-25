@@ -45,7 +45,7 @@ namespace PM2
                 },
                 Time = new BubbasEngine.Engine.Timing.TimeManagerArgs() // Time
                 {
-                    StepsPerSecond = 10
+                    StepsPerSecond = 60
                 },
                 Window = new BubbasEngine.Engine.Windows.GameWindowArgs() // Window
                 {

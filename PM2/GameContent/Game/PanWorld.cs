@@ -14,35 +14,29 @@ namespace PM2.GameContent.Game
     internal class PanWorld : GameWorld
     {
         // Private
-        private WorldCamera _camera;
-
         private ContentManager _content;
-        private GraphicsRenderer _graphics;
+        private GraphicsLayer _layer;
 
         // Internal
-        internal WorldCamera Camera
-        { get { return _camera; } }
+        internal GraphicsLayer Layer
+        { get { return _layer; } }
 
         // Constructor(s)
         internal PanWorld(float stepTime)
             : base(stepTime)
         {
-            _camera = new WorldCamera();
         }
 
         //
-        internal void Initialize(ContentManager content, GraphicsRenderer graphics)
+        internal void Initialize(ContentManager content, GraphicsLayer layer)
         {
             // Keep references
             _content = content;
-            _graphics = graphics;
+            _layer = layer;
 
             // EntityContainer Events
             Entities.OnEntityAdded += OnEntityAdded;
             Entities.OnEntityRemoved += OnEntityRemoved;
-
-            // Camera
-            _camera.Size = new Vector2f(graphics.RenderWidth, graphics.RenderHeight);
         }
 
         //
@@ -50,13 +44,13 @@ namespace PM2.GameContent.Game
         {
             BaseEntity ent = (BaseEntity)obj;
             ent.GetContent(_content);
-            ent.AddDrawables(_graphics);
+            ent.AddDrawables(_layer);
         }
         private void OnEntityRemoved(GameObject obj)
         {
             BaseEntity ent = (BaseEntity)obj;
             ent.RemoveContent(_content);
-            ent.RemoveDrawables(_graphics);
+            ent.RemoveDrawables(_layer);
         }
     }
 }

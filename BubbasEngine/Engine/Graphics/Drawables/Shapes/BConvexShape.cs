@@ -40,5 +40,10 @@ namespace BubbasEngine.Engine.Graphics.Drawables.Shapes
         {
             GetShape().SetPoint(index, point);
         }
+
+        public void SetPointCount(uint count)
+        {
+            GetShape().SetPointCount(count);
+        }
     }
 }

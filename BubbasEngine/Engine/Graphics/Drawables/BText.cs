@@ -12,6 +12,7 @@ namespace BubbasEngine.Engine.Graphics.Drawables
         // Private
         private Text _text;
         private RenderStates _state;
+        private int _depth;
 
         // Public
         public uint CharacterSize
@@ -30,6 +31,9 @@ namespace BubbasEngine.Engine.Graphics.Drawables
         { get { return _text.Scale; } set { _text.Scale = value; } }
         public string Text
         { get { return _text.DisplayedString; } set { _text.DisplayedString = value; } }
+
+        public int Depth
+        { get { return _depth; } set { _depth = value; } }
 
         // Constructor(s)
         public BText()
@@ -58,9 +62,10 @@ namespace BubbasEngine.Engine.Graphics.Drawables
             return _text.GetGlobalBounds();
         }
 
-        // Animate
-        internal override void Animate(float delta)
+        // Depth
+        internal override int GetDepth()
         {
+            return _depth;
         }
 
         // Draw

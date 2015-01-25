@@ -160,7 +160,7 @@ namespace BubbasEngine.Engine
             _states.CallAnimate((float)frameTime);
 
             // Render
-            _graphics.Render((float)frameTime);
+            _graphics.Render();
         }
 
         private void Draw()

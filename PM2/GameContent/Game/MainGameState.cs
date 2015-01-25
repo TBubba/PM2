@@ -43,7 +43,7 @@ namespace PM2.GameContent.Game
                 StepTime = _time.StepsPerSecond
             });
 
-            _game.Initialize(_content, _graphics);
+            _game.Initialize(_content, _layer);
 
             //
             _keys.AddOnPressed(Keyboard.Key.Escape,
@@ -63,7 +63,7 @@ namespace PM2.GameContent.Game
             }));
             _mouse.AddOnMoved(new MouseMoveBinding((x, y) =>
             {
-                _game.Players[0].MoveTo(new Vector2(x, y));
+                _game.Players[0].SetTargetPosition(new Vector2(x, y));
             }));
 
             // Define content paths

@@ -49,7 +49,7 @@ namespace PM2.GameContent.MainMenu
             _logo = new BSprite(logoTexture);
             _logo.Position = new Vector2f(halfWidth, halfHeight);
             _logo.Origin = TypeConverter.Vector2uToVector2f(logoTexture.Size / 2u);
-            _graphics.AddDrawable(_logo, 0);
+            _layer.Renderables.Add(_logo);
 
             // Apply Keybindings
             _keys.Apply(_input.Keyboard);
@@ -82,7 +82,7 @@ namespace PM2.GameContent.MainMenu
             //content.DEQUSET(this, @"intro\logo.png");
 
             // Remove graphics
-            _graphics.RemoveDrawable(_logo, 0);
+            _layer.Renderables.Remove(_logo);
 
             // Remove Keybindings
             _keys.Remove(_input.Keyboard);

@@ -13,6 +13,7 @@ namespace BubbasEngine.Engine.Graphics.Drawables
         // Private
         private Sprite _sprite;
         private RenderStates _state;
+        private int _depth;
 
         // Public
         public Color Color
@@ -31,6 +32,9 @@ namespace BubbasEngine.Engine.Graphics.Drawables
         { get { return _sprite.Texture; } set { _sprite.Texture = value; } }
         public Transform Transform
         { get { return _state.Transform; } set { _state.Transform = value; } }
+
+        public int Depth
+        { get { return _depth; } set { _depth = value; } }
 
         // Constructor(s)
         public BSprite()
@@ -69,10 +73,10 @@ namespace BubbasEngine.Engine.Graphics.Drawables
             
         }
 
-        // Animate
-        internal override void Animate(float delta)
+        // Depth
+        internal override int GetDepth()
         {
-
+            return _depth;
         }
 
         // Draw

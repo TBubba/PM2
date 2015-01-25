@@ -24,7 +24,7 @@ namespace BubbasEngine.Engine.GameWorlds
         // Container
         public GameObject this[int index]
         {
-            get { return null; }
+            get { return _entities[index]; }
         }
 
         // Constructor(s)
@@ -205,7 +205,7 @@ namespace BubbasEngine.Engine.GameWorlds
             // Abort if the container is empty
             if (_entities.Count == 0)
             {
-                GameConsole.WriteLine(string.Format("{0}: Tried to remove all GameObjects while none where contained", GetType().Name), GameConsole.MessageType.Error); // Debug
+                GameConsole.WriteLine(string.Format("{0}: Tried to remove all GameObjects while none were contained", GetType().Name), GameConsole.MessageType.Error); // Debug
                 return 0;
             }
 

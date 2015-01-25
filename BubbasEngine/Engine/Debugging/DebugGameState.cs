@@ -13,8 +13,7 @@ namespace BubbasEngine.Engine.Debugging
     class DebugGameState : GameStates.GameState
     {
         // Private
-        private bool _show;
-        private int _layer;
+        private bool _hide;
 
         private BText _topLeft;
         private BSprite _cursor;
@@ -130,23 +129,8 @@ namespace BubbasEngine.Engine.Debugging
             }
 
             // Change value
-            _show = !_show;
-
-            //
-            if (_show)
-            {
-                // Show drawables
-                _graphics.AddDrawable(_topLeft, _layer);
-                _graphics.AddDrawable(_cursor, _layer);
-                _graphics.AddDrawable(_cursorScaled, _layer);
-            }
-            else
-            {
-                // Hide drawables
-                _graphics.RemoveDrawable(_topLeft, _layer);
-                _graphics.RemoveDrawable(_cursor, _layer);
-                _graphics.RemoveDrawable(_cursorScaled, _layer);
-            }
+            _hide = !_hide;
+            _layer.Hide = _hide;
         }
     }
 }

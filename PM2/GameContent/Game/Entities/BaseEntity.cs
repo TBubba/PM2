@@ -19,14 +19,8 @@ namespace PM2.GameContent.Game.Entities
         private Body _body;
         private BodyData _bodyData;
 
-        private Vector2 _startPosition;
-
         private ContentManager _content;
-        private GraphicsRenderer _graphics;
-
-        // Internal
-        internal Body Body
-        { get { return _body; } }
+        private GraphicsLayer _layer;
 
         // Constructor(s)
         internal BaseEntity()
@@ -57,23 +51,16 @@ namespace PM2.GameContent.Game.Entities
             // Dequest content (and remove drawables?)
         }
 
-        internal virtual void AddDrawables(GraphicsRenderer graphics)
+        internal virtual void AddDrawables(GraphicsLayer layer)
         {
             // Keep reference
-            _graphics = graphics;
+            _layer = layer;
 
             // Add drawables to renderer
         }
-        internal virtual void RemoveDrawables(GraphicsRenderer graphics)
+        internal virtual void RemoveDrawables(GraphicsLayer layer)
         {
             // Remove drawables from renderer
-        }
-
-        // Physics
-        internal void MoveTo(Vector2 position)
-        {
-            if (_body != null)
-                _body.Position = position;
         }
 
         //
@@ -101,13 +88,17 @@ namespace PM2.GameContent.Game.Entities
         {
             //
             RemoveContent(_content);
-            RemoveDrawables(_graphics);
+            RemoveDrawables(_layer);
 
             //
             OnRemoved();
         }
 
         //
+        internal Body GetBody()
+        {
+            return _body;
+        }
         internal virtual Body CreateBody(PhysicsWorld world, BodyData data)
         {
             return new Body(world, data.Position, data.Rotation);

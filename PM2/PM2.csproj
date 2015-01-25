@@ -61,6 +61,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GameContent\Game\Drawables\DrawableHitBox.cs" />
     <Compile Include="GameContent\Game\Entities\BaseEntity.cs" />
     <Compile Include="GameContent\Game\Entities\BodyData.cs" />
     <Compile Include="GameContent\Game\Entities\Pancake.cs" />
