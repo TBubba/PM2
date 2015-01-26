@@ -1,5 +1,7 @@
-# Visual Studio settings file
+# Visual Studio User-specific files
 *.suo
+*.user
+*.sln.docstates
 
 # Windows image file caches
 Thumbs.db
