@@ -37,10 +37,10 @@ namespace BubbasEngine.Engine.Graphics
         // Render
         internal void Render(RenderTarget target)
         {
-            // Sort
-            _renderables.Sort((x, y) => x.GetDepth().CompareTo(y.GetDepth()));
+            // Sort (Lowest first)
+            _renderables.Sort((x, y) => -x.GetDepth().CompareTo(y.GetDepth()));
 
-            //
+            // Render all
             int length = _renderables.Count;
             for (int i = 0; i < length; i++)
                 _renderables[i].Draw(target);

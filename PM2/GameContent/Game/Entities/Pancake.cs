@@ -38,13 +38,14 @@ namespace PM2.GameContent.Game.Entities
         {
             // Create pancake circle shape
             _shape = new BCircleShape(45f, 32);
-            _shape.Position = GetWorld().Layer.View.Size / 2f;
+            _shape.Position = GetWorld().Layer.GetView().Size / 2f;
             _shape.Origin = new Vector2f(_shape.Radius, _shape.Radius);
             _shape.FillColor = Color.Yellow;
 
             // Create pancake circle shape
             _hitbox = new DrawableHitBox();
             _hitbox.Shape.FillColor = new Color(Color.Red) { A = 125 };
+            _hitbox.Shape.Depth = -100;
         }
         internal override void RemoveContent(ContentManager content)
         {
@@ -72,17 +73,21 @@ namespace PM2.GameContent.Game.Entities
         internal override void OnAnimate(float delta)
         {
             Vector2f pos = new Vector2f(GetBody().Position.X, GetBody().Position.Y);
+            View view = GetWorld().Layer.GetView();
 
             // Position
             _shape.Position = pos;
 
             // Scale pancake
             _shape.Scale = new Vector2f(_shape.Scale.X,
-                Math.Max(Math.Abs((pos.Y - GetWorld().Layer.View.Size.Y / 2f) / GetWorld().Layer.View.Size.Y * 0.45f), 0.03f));
+                Math.Max(Math.Abs((pos.Y - view.Size.Y / 2f) / view.Size.Y * 0.45f), 0.03f));
 
             // Color
-            float d = pos.Y / GetWorld().Layer.View.Size.Y;
+            float d = pos.Y / view.Size.Y;
             _shape.FillColor = new Color((byte)(d * 256 / 2 + 256 / 2), (byte)(d * 256 / 2 + 256 / 2), 0);
+
+            // Depth
+            _shape.Depth = (int)pos.Y;
 
             // Hitbox
             _hitbox.SetShape(GetBody());
@@ -94,7 +99,7 @@ namespace PM2.GameContent.Game.Entities
         //
         internal override Body CreateBody(PhysicsWorld world, BodyData data)
         {
-            Body body = BodyFactory.CreateRectangle(world, 90f, 2f, 10f, data.Position);
+            Body body = BodyFactory.CreateRectangle(world, 9f, 0.2f, 1f, data.Position);
             body.IsStatic = false;
             body.IsKinematic = false;
             body.FixedRotation = true;

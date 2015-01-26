@@ -95,6 +95,7 @@
     <Compile Include="Vertex.cs" />
     <Compile Include="VertexArray.cs" />
     <Compile Include="View.cs" />
+    <Compile Include="ViewRef.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />

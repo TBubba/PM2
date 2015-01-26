@@ -40,9 +40,12 @@ namespace PM2.GameContent.Game
 
             //
             _world = new PanWorld(args.StepTime);
-            _world.PhysicsWorld.Gravity = new Vector2(0f, 0.001f);
+            _world.WorldSize = new Vector2(100f, 100f);
 
             _running = true;
+
+            //
+            _world.PhysicsWorld.Gravity = new Vector2(0f, 0.001f);
 
             //
             _random = new Random();
@@ -82,7 +85,7 @@ namespace PM2.GameContent.Game
         // Create
         internal void CreatePancake(Vector2 position)
         {
-            Pancake p = new Pancake(new BodyData() { Position = position });
+            Pancake p = new Pancake(new BodyData() { Position = position * _world.WorldSize });
 
             _world.Entities.Add(p);
         }
@@ -90,6 +93,12 @@ namespace PM2.GameContent.Game
         internal void SpawnPancake()
         {
 
+        }
+
+        // Player
+        internal void MovePlayer(int index, Vector2 position)
+        {
+            _players[index].SetTargetPosition(position * _world.WorldSize);
         }
 
         // Content

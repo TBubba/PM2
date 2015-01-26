@@ -8,6 +8,7 @@ using PM2.GameContent.Game.Entities;
 using BubbasEngine.Engine.Graphics;
 using BubbasEngine.Engine.Content;
 using BubbasEngine.Engine.Input;
+using BubbasEngine.Engine.Physics.Common;
 
 namespace PM2.GameContent.Game
 {
@@ -17,9 +18,14 @@ namespace PM2.GameContent.Game
         private ContentManager _content;
         private GraphicsLayer _layer;
 
+        private Vector2 _worldSize;
+
         // Internal
         internal GraphicsLayer Layer
         { get { return _layer; } }
+
+        internal Vector2 WorldSize
+        { get { return _worldSize; } set { _worldSize = value; } }
 
         // Constructor(s)
         internal PanWorld(float stepTime)

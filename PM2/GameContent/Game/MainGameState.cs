@@ -59,11 +59,11 @@ namespace PM2.GameContent.Game
             //
             _mouse.AddOnPressed(Mouse.Button.Left, new MouseButtonBinding((x, y) =>
             {
-                _game.CreatePancake(new Vector2(x, y));
+                _game.CreatePancake(new Vector2(x, y) / new Vector2(_graphics.RenderWidth, _graphics.RenderHeight));
             }));
             _mouse.AddOnMoved(new MouseMoveBinding((x, y) =>
             {
-                _game.Players[0].SetTargetPosition(new Vector2(x, y));
+                _game.MovePlayer(0, new Vector2(x, y) / new Vector2(_graphics.RenderWidth, _graphics.RenderHeight));
             }));
 
             // Define content paths

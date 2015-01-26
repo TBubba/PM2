@@ -10,6 +10,7 @@ namespace BubbasEngine.Engine.Graphics
     {
         // Private
         private List<GraphicsLayer> _layers;
+        private GraphicsRenderer _renderer;
 
         // Public
         public int Count
@@ -22,9 +23,13 @@ namespace BubbasEngine.Engine.Graphics
         }
 
         // Constructor(s)
-        internal GraphicsLayerContainer()
+        internal GraphicsLayerContainer(GraphicsRenderer renderer)
         {
+            // Container
             _layers = new List<GraphicsLayer>();
+
+            // Reference to renderer
+            _renderer = renderer;
         }
 
         // Render
@@ -42,7 +47,7 @@ namespace BubbasEngine.Engine.Graphics
             GameConsole.WriteLine(string.Format("{0}: New layer created (obj = null)", GetType().Name)); // Debug
 
             // Create a new layer
-            GraphicsLayer layer = new GraphicsLayer();
+            GraphicsLayer layer = new GraphicsLayer(_renderer.DefaultView);
 
             // Add layer
             _layers.Add(layer);
