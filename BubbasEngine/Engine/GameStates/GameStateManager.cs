@@ -47,6 +47,12 @@ namespace BubbasEngine.Engine.GameStates
             // Add state
             _states.Add(state, new GameStateCondition());
 
+            // Set up state
+            state.Setup(_engine);
+
+            // Initialize state
+            state.Initialize();
+
             // Load resources
             LoadState(state);
 
@@ -100,7 +106,6 @@ namespace BubbasEngine.Engine.GameStates
             // Add to dele
             _beginFrame += () =>
                 {
-                    state.Setup(_engine);
                     state.LoadContent();
                 };
         }

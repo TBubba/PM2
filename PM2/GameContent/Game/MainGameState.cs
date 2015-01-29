@@ -33,7 +33,7 @@ namespace PM2.GameContent.Game
         }
 
         //
-        public override void LoadContent()
+        public override void Initialize()
         {
             // Initialize game
             _game = new PanGame(new PanGameArgs()
@@ -55,6 +55,19 @@ namespace PM2.GameContent.Game
                     else
                         _game.Run();
                 })));
+        }
+
+        public override void LoadContent()
+        {
+            // Define content paths
+            const string panPath = @"GameContent\Game\Pans\StandardPan.png";
+
+            // Request content
+            _content.RequestTexture(this, panPath);
+
+            // Define positioning
+            float halfWidth = (float)(_graphics.RenderWidth / 2u);
+            float halfHeight = (float)(_graphics.RenderHeight / 2u);
 
             //
             _mouse.AddOnPressed(Mouse.Button.Left, new MouseButtonBinding((x, y) =>
@@ -65,16 +78,6 @@ namespace PM2.GameContent.Game
             {
                 _game.MovePlayer(0, new Vector2(x, y) / new Vector2(_graphics.RenderWidth, _graphics.RenderHeight));
             }));
-
-            // Define content paths
-            const string panPath = @"GameContent\Game\Pans\StandardPan.png";
-
-            // Request content
-            _content.RequestTexture(this, panPath);
-
-            // Define positioning
-            float halfWidth = (float)(_graphics.RenderWidth / 2u);
-            float halfHeight = (float)(_graphics.RenderHeight / 2u);
 
             // Apply Keybindings
             _keys.Apply(_input.Keyboard);

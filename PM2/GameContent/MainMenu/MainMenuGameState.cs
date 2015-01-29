@@ -19,6 +19,7 @@ namespace PM2.GameContent.MainMenu
 
         private KeyboardBindingCollection _keys;
 
+        //
         internal MainMenuGameState()
         {
             //
@@ -28,6 +29,12 @@ namespace PM2.GameContent.MainMenu
                     {
 
                     })));
+        }
+
+        //
+        public override void Initialize()
+        {
+
         }
 
         public override void LoadContent()

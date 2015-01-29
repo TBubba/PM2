@@ -94,14 +94,14 @@ namespace BubbasEngine.Engine.GameWorlds
             if (entity is IGameBeginFrame) // BeginFrame
                 _objectBeginFrame += ((IGameBeginFrame)entity).BeginFrame;
 
-            if (entity is IGameStep) // Step
-                _objectStep += ((IGameStep)entity).Step;
-            if (entity is IGameAnimate) // Animate
-                _objectAnimate += ((IGameAnimate)entity).Animate;
             if (entity is IGameCreated) // Created
                 _beginFrame += ((IGameCreated)entity).Created;
             if (entity is IGamePhysics) // GetBody (Physics)
                 _beginFrame += delegate { ((IGamePhysics)entity).AddBody(_physicsWorld); };
+            if (entity is IGameStep) // Step
+                _objectStep += ((IGameStep)entity).Step;
+            if (entity is IGameAnimate) // Animate
+                _objectAnimate += ((IGameAnimate)entity).Animate;
         }
         private void RemoveEntityCalls(GameObject entity)
         {

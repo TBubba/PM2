@@ -72,34 +72,28 @@ namespace PM2.GameContent.Game.Entities
         {
             // Calculate distance
             Vector2 dist = _target - GetBody().Position;
+            Vector2 amount = dist;
+            amount.Normalize();
 
-            const float force = 1f;
-            Vector2 amount = Vector2.Zero;
-
+            // 
             if (_targetX)
             {
-                amount.X = (float)Math.Round(Math.Cos((float)Math.Atan2(dist.Y, dist.X)), 2);
-
                 if (Math.Abs(dist.X) < Math.Abs(amount.X))
                 {
-                    amount.X = -GetBody().LinearVelocity.X;
-
+                    GetBody().LinearVelocity = new Vector2(0f, GetBody().LinearVelocity.Y);
                     _targetX = false;
                 }
             }
 
+            //
             if (_targetY)
-            {
-                amount.Y = (float)Math.Round(Math.Sin((float)Math.Atan2(dist.Y, dist.X)), 2);
-
+            {   
                 if (Math.Abs(dist.Y) < Math.Abs(amount.Y))
                 {
-                    amount.Y = -GetBody().LinearVelocity.Y;
+                    GetBody().LinearVelocity = new Vector2(GetBody().LinearVelocity.X, 0f);
                     _targetY = false;
                 }
             }
-
-            GetBody().LinearVelocity = amount * force;
         }
         internal override void OnAnimate(float delta)
         {
@@ -142,9 +136,19 @@ namespace PM2.GameContent.Game.Entities
         //
         internal void SetTargetPosition(Vector2 target)
         {
+            // Set Target
             _target = target;
+
+            //
             _targetX = true;
             _targetY = true;
+
+            // Calculate distance
+            Vector2 dist = _target - GetBody().Position;
+            Vector2 amount = dist;
+            amount.Normalize();
+
+            GetBody().LinearVelocity = amount;
         }
     }
 }

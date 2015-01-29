@@ -19,6 +19,7 @@ namespace PM2.GameContent
 
         private KeyboardBindingCollection _keys;
 
+        //
         internal LaunchGameState()
         {
             //
@@ -30,6 +31,12 @@ namespace PM2.GameContent
                     })));
         }
 
+        //
+        public override void Initialize()
+        {
+
+        }
+        
         public override void LoadContent()
         {
             // Define content paths

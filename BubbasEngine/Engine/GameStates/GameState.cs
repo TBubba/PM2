@@ -52,6 +52,7 @@ namespace BubbasEngine.Engine.GameStates
         }
 
         // Functions
+        public abstract void Initialize();
         public abstract void LoadContent();
         public abstract void BeginFrame();
         public abstract void Step();

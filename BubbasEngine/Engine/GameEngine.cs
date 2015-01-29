@@ -59,9 +59,6 @@ namespace BubbasEngine.Engine
             // GameStates
             _states = new GameStateManager(this, args.States);
 
-            if (args.Debug.Activated)
-                _states.AddState(new Debugging.DebugGameState(args.Debug));
-
             // Graphics
             _graphics = new GraphicsRenderer();
             _graphics.SetRenderSize(args.Graphics.ResolutionWidth, args.Graphics.ResolutionHeight);
@@ -77,6 +74,10 @@ namespace BubbasEngine.Engine
 
             // Window
             CreateWindow(args.Window);
+
+            // Add Debug GameState
+            if (args.Debug.Activated)
+                _states.AddState(new Debugging.DebugGameState(args.Debug));
         }
 
         //
@@ -133,11 +134,11 @@ namespace BubbasEngine.Engine
             // Update Window
             _window.DispatchEvents();
 
-            // Update input
-            _input.Update();
-
             //
             _states.CallBeginFrame();
+
+            // Update input
+            _input.Update();
 
             // Step
             int steps = _time.GetStepCount();

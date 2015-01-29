@@ -49,6 +49,11 @@ namespace BubbasEngine.Engine.Debugging
         }
 
         //
+        public override void Initialize()
+        {
+
+        }
+
         public override void LoadContent()
         {
             //
