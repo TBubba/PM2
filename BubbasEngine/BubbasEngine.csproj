@@ -174,8 +174,6 @@
     <Compile Include="Engine\Physics\Controllers\GravityController.cs" />
     <Compile Include="Engine\Physics\Controllers\SimpleWindForce.cs" />
     <Compile Include="Engine\Physics\Controllers\VelocityLimitController.cs" />
-    <Compile Include="Engine\Physics\ConvertUnits.cs" />
-    <Compile Include="Engine\Physics\DebugViewBase.cs" />
     <Compile Include="Engine\Physics\Dynamics\Body.cs" />
     <Compile Include="Engine\Physics\Dynamics\BreakableBody.cs" />
     <Compile Include="Engine\Physics\Dynamics\ContactManager.cs" />
@@ -205,6 +203,7 @@
     <Compile Include="Engine\Physics\Factories\LinkFactory.cs" />
     <Compile Include="Engine\Physics\Settings.cs" />
     <Compile Include="Engine\TypeConverter.cs" />
+    <Compile Include="Engine\UnitConverter.cs" />
     <Compile Include="Engine\Users\ILocalUser.cs" />
     <Compile Include="Engine\Users\IWebUser.cs" />
     <Compile Include="Engine\Users\User.cs" />

@@ -64,7 +64,7 @@ namespace BubbasEngine.Engine.Physics.Common
         public float X;
         public float Y;
 
-        // Constucor(s)
+        // Constructor(s)
         /// <summary>
         /// Constructor foe standard 2D vector.
         /// </summary>

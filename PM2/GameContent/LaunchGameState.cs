@@ -55,7 +55,7 @@ namespace PM2.GameContent
             // Set up graphics
             _logo = new BSprite(logoTexture);
             _logo.Position = new Vector2f(halfWidth, halfHeight);
-            _logo.Origin = TypeConverter.Vector2uToVector2f(logoTexture.Size / 2u);
+            _logo.Origin = new Vector2f(logoTexture.Size / 2u);
             _layer.Renderables.Add(_logo);
 
             // Apply Keybindings

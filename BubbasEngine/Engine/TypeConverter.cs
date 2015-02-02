@@ -8,6 +8,7 @@ namespace BubbasEngine.Engine
 {
     public static class TypeConverter
     {
+        //
         public static byte BoolsToByte(bool[] bools)
         {
             int length = bools.Length;
@@ -94,9 +95,6 @@ namespace BubbasEngine.Engine
             return bools;
         }
 
-        public static Vector2f Vector2uToVector2f(Vector2u v)
-        {
-            return new Vector2f(v.X, v.Y);
-        }
+        //
     }
 }

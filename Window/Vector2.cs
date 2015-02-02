@@ -31,6 +31,30 @@ namespace SFML
 
             ////////////////////////////////////////////////////////////
             /// <summary>
+            /// Construct the vector from another vectors coordinates
+            /// </summary>
+            /// <param name="vec">Vector coordinates</param>
+            ////////////////////////////////////////////////////////////
+            public Vector2f(Vector2i vec)
+            {
+                X = (float)vec.X;
+                Y = (float)vec.Y;
+            }
+
+            ////////////////////////////////////////////////////////////
+            /// <summary>
+            /// Construct the vector from another vectors coordinates
+            /// </summary>
+            /// <param name="vec">Vector coordinates</param>
+            ////////////////////////////////////////////////////////////
+            public Vector2f(Vector2u vec)
+            {
+                X = (float)vec.X;
+                Y = (float)vec.Y;
+            }
+
+            ////////////////////////////////////////////////////////////
+            /// <summary>
             /// Operator - overload ; returns the opposite of a vector
             /// </summary>
             /// <param name="v">Vector to negate</param>
@@ -171,6 +195,30 @@ namespace SFML
                 X = x;
                 Y = y;
             }
+            
+            ////////////////////////////////////////////////////////////
+            /// <summary>
+            /// Construct the vector from another vectors coordinates
+            /// </summary>
+            /// <param name="vec">Vector coordinates</param>
+            ////////////////////////////////////////////////////////////
+            public Vector2i(Vector2f vec)
+            {
+                X = (int)vec.X;
+                Y = (int)vec.Y;
+            }
+
+            ////////////////////////////////////////////////////////////
+            /// <summary>
+            /// Construct the vector from another vectors coordinates
+            /// </summary>
+            /// <param name="vec">Vector coordinates</param>
+            ////////////////////////////////////////////////////////////
+            public Vector2i(Vector2u vec)
+            {
+                X = (int)vec.X;
+                Y = (int)vec.Y;
+            }
 
             ////////////////////////////////////////////////////////////
             /// <summary>
@@ -301,6 +349,30 @@ namespace SFML
             {
                 X = x;
                 Y = y;
+            }
+            
+            ////////////////////////////////////////////////////////////
+            /// <summary>
+            /// Construct the vector from another vectors coordinates
+            /// </summary>
+            /// <param name="vec">Vector coordinates</param>
+            ////////////////////////////////////////////////////////////
+            public Vector2u(Vector2f vec)
+            {
+                X = (uint)vec.X;
+                Y = (uint)vec.Y;
+            }
+
+            ////////////////////////////////////////////////////////////
+            /// <summary>
+            /// Construct the vector from another vectors coordinates
+            /// </summary>
+            /// <param name="vec">Vector coordinates</param>
+            ////////////////////////////////////////////////////////////
+            public Vector2u(Vector2i vec)
+            {
+                X = (uint)vec.X;
+                Y = (uint)vec.Y;
             }
 
             ////////////////////////////////////////////////////////////
