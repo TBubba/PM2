@@ -41,18 +41,18 @@ namespace PM2.GameContent.Game
             _layer = layer;
 
             // EntityContainer Events
-            Entities.OnEntityAdded += OnEntityAdded;
-            Entities.OnEntityRemoved += OnEntityRemoved;
+            OnEntityActivated += EntityActivated;
+            OnEntityDeactivated += EntityDeactivated;
         }
 
         //
-        private void OnEntityAdded(GameObject obj)
+        private void EntityActivated(GameObject obj)
         {
             BaseEntity ent = (BaseEntity)obj;
             ent.GetContent(_content);
             ent.AddDrawables(_layer);
         }
-        private void OnEntityRemoved(GameObject obj)
+        private void EntityDeactivated(GameObject obj)
         {
             BaseEntity ent = (BaseEntity)obj;
             ent.RemoveContent(_content);

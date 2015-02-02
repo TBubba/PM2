@@ -97,11 +97,12 @@ namespace PM2.GameContent.Game.Entities
         }
         internal override void OnAnimate(float delta)
         {
+            Vector2f wsize = new Vector2f(GetWorld().WorldSize.X, GetWorld().WorldSize.Y);
             Vector2f pos = new Vector2f(GetBody().Position.X, GetBody().Position.Y);
             View view = GetWorld().Layer.GetView();
 
             // Position
-            _shape.Position = pos;
+            _shape.Position = pos * wsize;
 
             // Scale pancake
             _shape.Scale = new Vector2f(_shape.Scale.X,

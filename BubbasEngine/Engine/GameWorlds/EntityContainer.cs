@@ -20,7 +20,6 @@ namespace BubbasEngine.Engine.GameWorlds
         // Events
         public event EntityEventDelegate OnEntityAdded;
         public event EntityEventDelegate OnEntityRemoved;
-
         // Container
         public GameObject this[int index]
         {

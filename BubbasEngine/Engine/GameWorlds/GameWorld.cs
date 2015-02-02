@@ -31,6 +31,10 @@ namespace BubbasEngine.Engine.GameWorlds
         public float StepTime
         { get { return _stepTime; } set { _stepTime = value; } }
 
+        // Event
+        public event EntityEventDelegate OnEntityActivated;
+        public event EntityEventDelegate OnEntityDeactivated;
+
         // Constructor(s)
         public GameWorld(float stepTime)
         {
@@ -77,6 +81,13 @@ namespace BubbasEngine.Engine.GameWorlds
 
             // Add entity calls
             AddEntityCalls(entity);
+
+            // Set GameObject as active (GameLoop methods called)
+            _beginFrame += delegate {
+                entity.Active = true;
+                if (OnEntityActivated != null)
+                OnEntityActivated(entity);
+            };
         }
         internal void OnEntityRemoved(GameObject entity)
         {
@@ -85,6 +96,11 @@ namespace BubbasEngine.Engine.GameWorlds
 
             // Remove entity calls
             RemoveEntityCalls(entity);
+
+            // Set GameObject as inactive (GameLoop methods not called)
+            entity.Active = false;
+            if (OnEntityDeactivated != null)
+                OnEntityDeactivated(entity);
         }
 
         // Handle Entities
@@ -92,16 +108,16 @@ namespace BubbasEngine.Engine.GameWorlds
         {
             //
             if (entity is IGameBeginFrame) // BeginFrame
-                _objectBeginFrame += ((IGameBeginFrame)entity).BeginFrame;
+                _beginFrame += delegate { _objectBeginFrame += ((IGameBeginFrame)entity).BeginFrame; };
 
             if (entity is IGameCreated) // Created
                 _beginFrame += ((IGameCreated)entity).Created;
             if (entity is IGamePhysics) // GetBody (Physics)
                 _beginFrame += delegate { ((IGamePhysics)entity).AddBody(_physicsWorld); };
             if (entity is IGameStep) // Step
-                _objectStep += ((IGameStep)entity).Step;
+                _beginFrame += delegate { _objectStep += ((IGameStep)entity).Step; };
             if (entity is IGameAnimate) // Animate
-                _objectAnimate += ((IGameAnimate)entity).Animate;
+                _beginFrame += delegate { _objectAnimate += ((IGameAnimate)entity).Animate; };
         }
         private void RemoveEntityCalls(GameObject entity)
         {

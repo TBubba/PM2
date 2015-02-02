@@ -90,7 +90,7 @@ namespace PM2.GameContent.Game.Entities
             _shape.Depth = (int)pos.Y;
 
             // Hitbox
-            _hitbox.SetShape(GetBody());
+            _hitbox.SetShape(GetBody(), 10f);
         }
         internal override void OnRemoved()
         {

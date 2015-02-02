@@ -10,6 +10,12 @@ namespace BubbasEngine.Engine.GameWorlds
         // Private & Protected
         protected GameWorld _world
         { get; private set; }
+        protected bool _active
+        { get; private set; }
+
+        // Public
+        public bool Active
+        { get { return _active; } internal set { _active = value; } }
 
         // Constructor(s)
         public GameObject()
