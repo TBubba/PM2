@@ -40,7 +40,7 @@ namespace PM2.GameContent.Game
 
             //
             _world = new PanWorld(args.StepTime);
-            _world.WorldSize = new Vector2(100f, 100f);
+            _world.WorldSize = new Vector2(16f, 9f);
 
             _running = true;
 
