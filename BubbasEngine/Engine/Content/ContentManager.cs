@@ -126,7 +126,7 @@ namespace BubbasEngine.Engine.Content
         }
 
         // Request
-        public void RequestTexture(GameState state, string path)
+        public void RequestTexture(string path, GameState state = null)
         {
             // Load content not loaded
             if (!_textures.ContainsKey(path))
@@ -148,7 +148,7 @@ namespace BubbasEngine.Engine.Content
             GameConsole.WriteLine(string.Format("{0}: State subscribed to texture (Path {1})", this.GetType().Name, path)); // Debug
         }
 
-        public void RequestFont(GameState state, string path)
+        public void RequestFont(string path, GameState state = null)
         {
             // Load content not loaded
             if (!_fonts.ContainsKey(path))
@@ -170,11 +170,11 @@ namespace BubbasEngine.Engine.Content
             GameConsole.WriteLine(string.Format("{0}: State subscribed to font (Path {1})", this.GetType().Name, path)); // Debug
         }
 
-        public void RequestShader(GameState state, string vertPath)
+        public void RequestShader(string vertPath, GameState state = null)
         {
-            RequestShader(state, vertPath, vertPath);
+            RequestShader(vertPath, vertPath, state);
         }
-        public void RequestShader(GameState state, string vertPath, string fragPath)
+        public void RequestShader(string vertPath, string fragPath, GameState state = null)
         {
             // If the VertPath is not loaded
             if (!_shaders.ContainsKey(vertPath))
@@ -205,7 +205,7 @@ namespace BubbasEngine.Engine.Content
         }
 
         // Dequest (?)
-        public void DequestTexture(GameState state, string path)
+        public void DequestTexture(string path, GameState state = null)
         {
             // Not found
             if (!_textures.ContainsKey(path))
@@ -228,7 +228,7 @@ namespace BubbasEngine.Engine.Content
             }
         }
 
-        public void DequestFont(GameState state, string path)
+        public void DequestFont(string path, GameState state = null)
         {
             // Not found
             if (!_fonts.ContainsKey(path))
@@ -251,11 +251,11 @@ namespace BubbasEngine.Engine.Content
             }
         }
 
-        public void DequestShader(GameState state, string vertPath)
+        public void DequestShader(string vertPath, GameState state = null)
         {
-            DequestShader(state, vertPath, vertPath);
+            DequestShader(vertPath, vertPath, state);
         }
-        public void DequestShader(GameState state, string vertPath, string fragPath)
+        public void DequestShader(string vertPath, string fragPath, GameState state = null)
         {
             // If the VertPath is not found
             if (!_shaders.ContainsKey(vertPath))

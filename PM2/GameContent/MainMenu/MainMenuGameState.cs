@@ -43,7 +43,7 @@ namespace PM2.GameContent.MainMenu
             const string logoPath = @"GameContent\Intro\Logo.png";
 
             // Request content
-            _content.RequestTexture(this, logoPath);
+            _content.RequestTexture(logoPath, this);
 
             // Define positioning
             float halfWidth = (float)(_graphics.RenderWidth / 2u);

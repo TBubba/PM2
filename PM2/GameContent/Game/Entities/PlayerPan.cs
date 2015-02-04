@@ -151,5 +151,11 @@ namespace PM2.GameContent.Game.Entities
 
             GetBody().LinearVelocity = amount;
         }
+
+        //
+        public override string ToString()
+        {
+            return "PLES FUCKING ADD ME";
+        }
     }
 }

@@ -10,6 +10,8 @@ using BubbasEngine.Engine.Graphics;
 using BubbasEngine.Engine.Input;
 using System.Collections.ObjectModel;
 using BubbasEngine.Engine.Physics.Common;
+using BubbasEngine.Engine.Graphics.Drawables;
+using SFML.Graphics;
 
 namespace PM2.GameContent.Game
 {
@@ -21,6 +23,9 @@ namespace PM2.GameContent.Game
 
         private bool _running;
         private PanGameArgs _args;
+
+        private GraphicsLayer _layer;
+        private BText _debugText;
 
         private Random _random;
 
@@ -49,6 +54,11 @@ namespace PM2.GameContent.Game
 
             //
             _random = new Random();
+            
+            //
+            _debugText = new BText();
+            _debugText.Color = Color.White;
+            _debugText.CharacterSize = 12u;
 
             // Create player container
             _players = new PlayerPan[4];
@@ -58,6 +68,9 @@ namespace PM2.GameContent.Game
         // Initialize
         internal void Initialize(ContentManager content, GraphicsLayer layer)
         {
+            // Keep ref
+            _layer = layer;
+
             // Initialize world
             _world.Initialize(content, layer);
 
@@ -104,7 +117,17 @@ namespace PM2.GameContent.Game
         // Content
         internal void LoadContent(ContentManager content)
         {
+            //
+            const string fontPath = @"Common\Fonts\AcidStructure.ttf";
 
+            //
+            content.RequestFont(fontPath);
+
+            //
+            _debugText.Font = content.GetFont(fontPath);
+
+            //
+            _layer.Renderables.Add(_debugText);
         }
         internal void UnloadContent(ContentManager content)
         {
@@ -126,6 +149,17 @@ namespace PM2.GameContent.Game
         {
             if (_running)
                 _world.Animate(delta);
+
+            //
+            StringBuilder sb = new StringBuilder();
+
+            //sb.AppendFormat("Player(s) {Count: {0}}", _players.Length);
+
+            for (int i = 0; i < _players.Length; i++)
+                if (_players[i] != null)
+                    sb.AppendFormat("\t{0}: {1}", i, _players[i].ToString());
+
+            _debugText.Text = sb.ToString();
         }
     }
 }

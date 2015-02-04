@@ -63,7 +63,7 @@ namespace PM2.GameContent.Game
             const string panPath = @"GameContent\Game\Pans\StandardPan.png";
 
             // Request content
-            _content.RequestTexture(this, panPath);
+            _content.RequestTexture(panPath, this);
 
             // Define positioning
             float halfWidth = (float)(_graphics.RenderWidth / 2u);
@@ -78,6 +78,9 @@ namespace PM2.GameContent.Game
             {
                 _game.MovePlayer(0, new Vector2(x, y) / new Vector2(_graphics.RenderWidth, _graphics.RenderHeight));
             }));
+
+            // Load world content
+            _game.LoadContent(_content);
 
             // Apply Keybindings
             _keys.Apply(_input.Keyboard);
@@ -103,6 +106,9 @@ namespace PM2.GameContent.Game
         {
             // Unload content
             //content.DEQUSET(this, @"intro\logo.png");
+
+            // Unload
+            _game.UnloadContent(_content);
 
             // Remove Keybindings
             _keys.Remove(_input.Keyboard);

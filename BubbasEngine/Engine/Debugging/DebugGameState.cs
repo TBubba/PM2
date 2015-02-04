@@ -67,8 +67,8 @@ namespace BubbasEngine.Engine.Debugging
 
             //
             if (anyFont)
-                _content.RequestFont(this, fontPath);
-            _content.RequestTexture(this, pixelPath);
+                _content.RequestFont(fontPath, this);
+            _content.RequestTexture(pixelPath, this);
 
             // Info text
             if (anyFont)

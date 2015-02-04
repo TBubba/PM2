@@ -9,6 +9,7 @@ using BubbasEngine.Engine.Graphics;
 using BubbasEngine.Engine.Content;
 using BubbasEngine.Engine.Input;
 using BubbasEngine.Engine.Physics.Common;
+using BubbasEngine.Engine.Graphics.Drawables;
 
 namespace PM2.GameContent.Game
 {

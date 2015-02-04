@@ -47,6 +47,7 @@
     <Compile Include="Engine\Content\ContentTypes\RefShader.cs" />
     <Compile Include="Engine\Debugging\DebugArgs.cs" />
     <Compile Include="Engine\Debugging\DebugGameState.cs" />
+    <Compile Include="Engine\GameStates\GameStateContainer.cs" />
     <Compile Include="Engine\GameWorlds\EntityContainer.cs" />
     <Compile Include="Engine\GameWorlds\GameInterfaces\IGamePhysics.cs" />
     <Compile Include="Engine\GameWorlds\GameObject.cs" />
