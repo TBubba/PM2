@@ -119,7 +119,7 @@ namespace PM2.GameContent.Game
         internal void LoadContent(ContentManager content)
         {
             //
-            const string fontPath = @"Common\Fonts\Anklada.ttf";
+            const string fontPath = @"Common\Fonts\WhiteRabbit.ttf";
 
             //
             content.RequestFont(fontPath);
@@ -154,11 +154,14 @@ namespace PM2.GameContent.Game
             //
             StringBuilder sb = new StringBuilder();
 
-            //sb.AppendFormat("Player(s) {Count: {0}}", _players.Length);
-
+            sb.Append(string.Format("Players (Count: {0})\n", _players.Length));
             for (int i = 0; i < _players.Length; i++)
                 if (_players[i] != null)
-                    sb.AppendFormat("\t{0}: {1}", i, _players[i].ToString());
+                    sb.Append(string.Format("\t{0}: {1}\n", i, _players[i].ToString()));
+
+            sb.Append(string.Format("Entities: (Count: {0})\n", _world.Entities.Count));
+            for (int i = 0; i < _world.Entities.Count; i++)
+                sb.Append(string.Format("\t{0}: {1}\n", i, _world.Entities[i].ToString()));
 
             _debugText.Text = sb.ToString();
         }

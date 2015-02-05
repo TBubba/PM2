@@ -29,7 +29,7 @@ namespace BubbasEngine.Engine.Content
         internal ContentManager(ContentManagerArgs args)
         {
             // Content containers
-            _textures = new Dictionary<string, RefTexture>();
+            _textures = new ContentContainer<RefTexture>(); //_textures = new Dictionary<string, RefTexture>();
             _fonts = new Dictionary<string, RefFont>();
             _shaders = new Dictionary<string, Dictionary<string, RefShader>>();
 

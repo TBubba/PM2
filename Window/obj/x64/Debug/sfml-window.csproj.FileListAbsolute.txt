@@ -1,0 +1,6 @@
+C:\GitHub\lib\x64\sfmlnet-window-2.dll
+C:\GitHub\lib\x64\sfmlnet-window-2.pdb
+C:\GitHub\lib\x64\window-doc.xml
+C:\GitHub\PM2\Window\obj\x64\Debug\sfmlnet-window-2.dll
+C:\GitHub\PM2\Window\obj\x64\Debug\sfmlnet-window-2.pdb
+C:\GitHub\PM2\Window\obj\x64\Debug\sfml-window.csprojResolveAssemblyReference.cache

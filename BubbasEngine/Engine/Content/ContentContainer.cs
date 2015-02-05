@@ -33,6 +33,22 @@ namespace BubbasEngine.Engine.Content
             Entry = entry;
         }
     }
+    public class EntryChangedEventArgs : EventArgs
+    {
+        public string Key;
+        public object Entry;
+        public object OldEntry;
+
+        public EntryChangedEventArgs()
+        {
+        }
+        public EntryChangedEventArgs(string key, object entry, object oldEntry)
+        {
+            Key = key;
+            Entry = entry;
+            OldEntry = oldEntry;
+        }
+    }
 
     public class ContentContainer<T>
     {
@@ -46,17 +62,26 @@ namespace BubbasEngine.Engine.Content
         // Events
         public event EventHandler<EntryAddedEventArgs> OnEntryAdded;
         public event EventHandler<EntryRemovedEventArgs> OnEntryRemoved;
+        public event EventHandler<EntryChangedEventArgs> OnEntryChanged;
+
         // Container
         public T this[string key]
         {
             get { return _entries[key]; }
+            set
+            {
+                if (_entries.ContainsKey(key))
+                    Set(key, value);
+                else
+                    Add(key, value);
+            }
         }
 
         // Constructor(s)
         internal ContentContainer()
         {
             // Create private container
-            _entries = new List<T>();
+            _entries = new Dictionary<string,T>();
         }
 
         // Handle Entries
@@ -65,11 +90,12 @@ namespace BubbasEngine.Engine.Content
             // Abort if parameter is null
             if (entry == null)
             {
-                GameConsole.WriteLine(string.Format("{0}: Tried to add a non-existing {1} (obj = null)", GetType().Name, typeof(T).Name), GameConsole.MessageType.Error); // Debug
-                return false;
+                throw new Exception("entry must not be null");
+                //GameConsole.WriteLine(string.Format("{0}: Tried to add a non-existing {1} (obj = null)", GetType().Name, typeof(T).Name), GameConsole.MessageType.Error); // Debug
+                //return false;
             }
 
-            // Abort if entry is not found
+            // Abort if key is already contained
             if (ContainsKey(key))
             {
                 GameConsole.WriteLine(string.Format("{0}: Tried to add an {1} that is already contained (Name {2})", GetType().Name, typeof(T).Name, entry.GetType().Name), GameConsole.MessageType.Error); // Debug
@@ -90,6 +116,37 @@ namespace BubbasEngine.Engine.Content
             return true;
         }
 
+        public bool Set(string key, T entry)
+        {
+            // Abort if parameter is null
+            if (entry == null)
+            {
+                throw new Exception("entry must not be null");
+                //GameConsole.WriteLine(string.Format("{0}: Tried to add a non-existing {1} (obj = null)", GetType().Name, typeof(T).Name), GameConsole.MessageType.Error); // Debug
+                //return false;
+            }
+
+            // Abort if key is not contained
+            if (!ContainsKey(key))
+            {
+                GameConsole.WriteLine(string.Format("{0}: Tried to add an {1} that is already contained (Name {2})", GetType().Name, typeof(T).Name, entry.GetType().Name), GameConsole.MessageType.Error); // Debug
+                return false;
+            }
+
+            //
+            object oldEntry = _entries[key];
+
+            // Set the entry to the new one
+            _entries[key] = entry;
+
+            // Call event
+            if (OnEntryChanged != null)
+                OnEntryChanged(this, new EntryChangedEventArgs(key, entry, oldEntry));
+
+            // Success
+            return true;
+        }
+
         public bool Remove(string key)
         {
             // Abort if parameter is null
@@ -103,6 +160,9 @@ namespace BubbasEngine.Engine.Content
                 return false;
             }
 
+            //
+            object entry = _entries[key];
+
             // Remove entry from container
             _entries.Remove(key);
 
@@ -111,7 +171,7 @@ namespace BubbasEngine.Engine.Content
 
             // Call event
             if (OnEntryRemoved != null)
-                OnEntryRemoved(this, new EntryRemovedEventArgs(key));
+                OnEntryRemoved(this, new EntryRemovedEventArgs(key, entry));
 
             // Success
             return true;

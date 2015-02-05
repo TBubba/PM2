@@ -121,9 +121,17 @@ namespace PM2.GameContent.Game.Entities
         // ToString
         public override string ToString()
         {
+            Vector2 position = Vector2.NaN;
+            float rotation = float.NaN;
+            if (_body != null)
+            {
+                position = _body.Position;
+                rotation = _body.Rotation;
+            }
+
             return "[" + GetType().Name + "]" +
-                   " Position(" + string.Format("{0};{1}", _body.Position.X, _body.Position.Y) + ")" +
-                   " Rotation(" + _body.Rotation + ")";
+                   string.Format("{0,-100}", " Position(" + string.Format("{0};{1}", position.X, position.Y) + ")") +
+                   " Rotation(" + rotation + ")";
         }
     }
 }

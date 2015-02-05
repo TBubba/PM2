@@ -99,7 +99,7 @@ namespace BubbasEngine.Engine.Graphics
             if (index < 0 || index >= _renderables.Count)
             {
                 throw new Exception("index out of bounds");
-                return false; // in case of removal of the exception thrown above
+                //return false; // in case of removal of the exception thrown above
             }
 
             // Remove layer from container

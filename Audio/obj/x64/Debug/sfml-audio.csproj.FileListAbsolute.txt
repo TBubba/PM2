@@ -1,0 +1,6 @@
+C:\GitHub\lib\x64\sfmlnet-audio-2.dll
+C:\GitHub\lib\x64\sfmlnet-audio-2.pdb
+C:\GitHub\lib\x64\audio-doc.xml
+C:\GitHub\PM2\Audio\obj\x64\Debug\sfmlnet-audio-2.dll
+C:\GitHub\PM2\Audio\obj\x64\Debug\sfmlnet-audio-2.pdb
+C:\GitHub\PM2\Audio\obj\x64\Debug\sfml-audio.csprojResolveAssemblyReference.cache

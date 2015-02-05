@@ -38,11 +38,16 @@ namespace BubbasEngine.Engine.Physics.Common
     public struct Vector2 : IEquatable<Vector2>
     {
         // Static
+        private static Vector2 nanVector = new Vector2(float.NaN, float.NaN);
         private static Vector2 zeroVector = new Vector2(0f, 0f);
         private static Vector2 unitVector = new Vector2(1f, 1f);
         private static Vector2 unitXVector = new Vector2(1f, 0f);
         private static Vector2 unitYVector = new Vector2(0f, 1f);
 
+        public static Vector2 NaN
+        {
+            get { return nanVector; }
+        }
         public static Vector2 Zero
         {
             get { return zeroVector; }
