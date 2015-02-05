@@ -36,5 +36,12 @@ namespace BubbasEngine.Engine.GameWorlds
         {
             _world = null;
         }
+
+        // ToString
+        public override string ToString()
+        {
+            return "[" + GetType().Name + "]" +
+                   " Active(" + _active + ")";
+        }
     }
 }

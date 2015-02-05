@@ -12,7 +12,7 @@ namespace BubbasEngine.Engine.Content
     {
         // Content
         private string _contentPath;
-        private Dictionary<string, RefTexture> _textures;
+        private ContentContainer<RefTexture> _textures; //private Dictionary<string, RefTexture> _textures;
         private Dictionary<string, RefFont> _fonts;
         private Dictionary<string, Dictionary<string, RefShader>> _shaders;
 
@@ -100,7 +100,6 @@ namespace BubbasEngine.Engine.Content
             // Return
             return font;
         }
-
 
         private RefShader LoadShader(string vertPath, string fragPath)
         {
@@ -204,7 +203,7 @@ namespace BubbasEngine.Engine.Content
             GameConsole.WriteLine(string.Format("{0}: State subscribed to shader (Path {1})", this.GetType().Name, vertPath)); // Debug
         }
 
-        // Dequest (?)
+        // Dequest (worst name ever?)
         public void DequestTexture(string path, GameState state = null)
         {
             // Not found
@@ -289,6 +288,19 @@ namespace BubbasEngine.Engine.Content
             //        //GameConsole.WriteLine(string.Format("{0}: Shader vertex category removed due to no fragment shaders having any subscribers (Paths: Vert {1}; Frag {2})", this.GetType().Name, vertPath, fragPath)); // Debug
             //    }
             //}
+        }
+
+        public void DequestAll()
+        {
+
+        }
+        public void DequestAllFromState(GameState state = null)
+        {
+            int length = _textures.Count;
+            for (int i = 0; i < length; i++)
+            {
+                // TODO
+            }
         }
 
         // Get

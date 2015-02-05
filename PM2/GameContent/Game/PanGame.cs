@@ -59,6 +59,7 @@ namespace PM2.GameContent.Game
             _debugText = new BText();
             _debugText.Color = Color.White;
             _debugText.CharacterSize = 12u;
+            _debugText.Depth = -1;
 
             // Create player container
             _players = new PlayerPan[4];
@@ -118,7 +119,7 @@ namespace PM2.GameContent.Game
         internal void LoadContent(ContentManager content)
         {
             //
-            const string fontPath = @"Common\Fonts\AcidStructure.ttf";
+            const string fontPath = @"Common\Fonts\Anklada.ttf";
 
             //
             content.RequestFont(fontPath);

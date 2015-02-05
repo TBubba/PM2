@@ -10,11 +10,27 @@ namespace BubbasEngine.Engine.Windows
     public class TitleChangedEventArgs : EventArgs
     {
         public string Title;
+
+        public TitleChangedEventArgs()
+        {
+        }
+        public TitleChangedEventArgs(string title)
+        {
+            Title = title;
+        }
     }
 
     public class ClosingWindowEventArgs : EventArgs
     {
         public bool Shut;
+
+        public ClosingWindowEventArgs()
+        {
+        }
+        public ClosingWindowEventArgs(bool shut)
+        {
+            Shut = shut;
+        }
     }
 
     public class ShutWindowEventArgs : EventArgs

@@ -72,7 +72,7 @@ namespace BubbasEngine.Engine.GameWorlds
             // Abort if parameter is null
             if (entity == null)
             {
-                GameConsole.WriteLine("{0}: Tried to remove a non-existing GameObject (obj = null)", GameConsole.MessageType.Error); // Debug
+                GameConsole.WriteLine(string.Format("{0}: Tried to remove a non-existing GameObject (obj = null)", GetType().Name), GameConsole.MessageType.Error); // Debug
                 return false;
             }
 

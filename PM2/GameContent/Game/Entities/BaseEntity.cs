@@ -117,5 +117,13 @@ namespace PM2.GameContent.Game.Entities
         internal virtual void OnRemoved()
         {
         }
+
+        // ToString
+        public override string ToString()
+        {
+            return "[" + GetType().Name + "]" +
+                   " Position(" + string.Format("{0};{1}", _body.Position.X, _body.Position.Y) + ")" +
+                   " Rotation(" + _body.Rotation + ")";
+        }
     }
 }

@@ -61,7 +61,7 @@ namespace BubbasEngine.Engine.Graphics
             // Abort if parameter is null
             if (layer == null)
             {
-                GameConsole.WriteLine("{0}: Tried to remove a non-existing GraphicsLayer (layer = null)", GameConsole.MessageType.Error); // Debug
+                GameConsole.WriteLine(string.Format("{0}: Tried to remove a non-existing GraphicsLayer (layer = null)", GetType().Name), GameConsole.MessageType.Error); // Debug
                 return false;
             }
 
