@@ -45,7 +45,7 @@ namespace PM2.GameContent.Game
 
             //
             _world = new PanWorld(args.StepTime);
-            _world.WorldSize = new Vector2(16f, 9f);
+            _world.WorldSize = new Vector2(160f, 90f);
 
             _running = true;
 
@@ -79,7 +79,7 @@ namespace PM2.GameContent.Game
             int length = _args.Players;
             for (int i = 0; i < length; i++)
             {
-                PlayerPan player = new PlayerPan();
+                PlayerPan player = new PlayerPan(new BodyData() { Position = new Vector2(.5f, .5f) * _world.WorldSize });
 
                 _players[i] = player;
                 _world.Entities.Add(player);
@@ -157,11 +157,16 @@ namespace PM2.GameContent.Game
             sb.Append(string.Format("Players (Count: {0})\n", _players.Length));
             for (int i = 0; i < _players.Length; i++)
                 if (_players[i] != null)
-                    sb.Append(string.Format("\t{0}: {1}\n", i, _players[i].ToString()));
+                    sb.Append(string.Format("\t{0,2}: {1}\n", i, _players[i].ToString()));
 
             sb.Append(string.Format("Entities: (Count: {0})\n", _world.Entities.Count));
             for (int i = 0; i < _world.Entities.Count; i++)
-                sb.Append(string.Format("\t{0}: {1}\n", i, _world.Entities[i].ToString()));
+            {
+                if (_world.Entities[i].GetType() == typeof(PlayerPan))
+                    continue;
+
+                sb.Append(string.Format("\t{0,2}: {1}\n", i, _world.Entities[i].ToString()));
+            }
 
             _debugText.Text = sb.ToString();
         }

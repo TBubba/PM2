@@ -46,26 +46,13 @@ namespace PM2.GameContent.Game.Drawables
         }
         internal void SetShape(Body body, float scale)
         {
-            //
-            PolygonShape shape = (PolygonShape)body.FixtureList[0].Shape;
-
-            //
-            _shape.SetPointCount((uint)shape.Vertices.Count);
-
-            //
-            BubbasEngine.Engine.Physics.Common.Transform xf;
-            body.GetTransform(out xf);
-            for (int i = 0; i < shape.Vertices.Count; i++)
-            {
-                //
-                Vector2 vector = MathUtils.Mul(ref xf, shape.Vertices[i]) * scale;
-                _shape.SetPoint((uint)i, new Vector2f(vector.X, vector.Y));
-            }
+            SetShape(body, Vector2.One * scale);
         }
         internal void SetShape(Body body, Vector2 scale)
         {
             //
             PolygonShape shape = (PolygonShape)body.FixtureList[0].Shape;
+            Vector2 center = shape.Normals.GetCentroid();
 
             //
             _shape.SetPointCount((uint)shape.Vertices.Count);
@@ -76,8 +63,8 @@ namespace PM2.GameContent.Game.Drawables
             for (int i = 0; i < shape.Vertices.Count; i++)
             {
                 //
-                Vector2 vector = MathUtils.Mul(ref xf, shape.Vertices[i]) * scale;
-                _shape.SetPoint((uint)i, new Vector2f(vector.X, vector.Y));
+                Vector2 vector = (MathUtils.Mul(ref xf, shape.Vertices[i]) - center) * scale;
+                _shape.SetPoint((uint)i, new Vector2f(vector.X + center.X, vector.Y + center.Y));
             }
         }
 

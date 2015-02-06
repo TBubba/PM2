@@ -130,8 +130,8 @@ namespace PM2.GameContent.Game.Entities
             }
 
             return "[" + GetType().Name + "]" +
-                   string.Format("{0,-100}", " Position(" + string.Format("{0};{1}", position.X, position.Y) + ")") +
-                   " Rotation(" + rotation + ")";
+                   string.Format("{0}", " Pos(" + string.Format("{0,9:0.000};{1,9:0.000}", position.X, position.Y) + ")") +
+                   " Rot(" + string.Format("{0:000}", rotation) + ")";
         }
     }
 }

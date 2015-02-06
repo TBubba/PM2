@@ -14,6 +14,7 @@ using SFML.Window;
 using BubbasEngine.Engine.Physics.Factories;
 using BubbasEngine.Engine.Physics.Dynamics;
 using PM2.GameContent.Game.Drawables;
+using BubbasEngine.Engine;
 
 namespace PM2.GameContent.Game.Entities
 {
@@ -72,25 +73,25 @@ namespace PM2.GameContent.Game.Entities
         }
         internal override void OnAnimate(float delta)
         {
-            Vector2f pos = new Vector2f(GetBody().Position.X, GetBody().Position.Y);
+            Vector2f pos = new Vector2f(GetBody().Position.X, GetBody().Position.Y) / new Vector2f(GetWorld().WorldSize.X, GetWorld().WorldSize.Y);
             View view = GetWorld().Layer.GetView();
 
             // Position
-            _shape.Position = pos;
+            _shape.Position = pos * view.Size;
 
             // Scale pancake
             _shape.Scale = new Vector2f(_shape.Scale.X,
-                Math.Max(Math.Abs((pos.Y - view.Size.Y / 2f) / view.Size.Y * 0.45f), 0.03f));
+                Math.Max(Math.Abs((pos.Y - 1f / 2f) / 1f * 0.45f), 0.03f));
 
             // Color
-            float d = pos.Y / view.Size.Y;
+            float d = pos.Y / 1f;
             _shape.FillColor = new Color((byte)(d * 256 / 2 + 256 / 2), (byte)(d * 256 / 2 + 256 / 2), 0);
 
             // Depth
             _shape.Depth = (int)pos.Y;
 
             // Hitbox
-            _hitbox.SetShape(GetBody(), 10f);
+            _hitbox.SetShape(GetBody(), new Vector2(view.Size.X / GetWorld().WorldSize.X, view.Size.Y / GetWorld().WorldSize.Y));
         }
         internal override void OnRemoved()
         {

@@ -97,26 +97,25 @@ namespace PM2.GameContent.Game.Entities
         }
         internal override void OnAnimate(float delta)
         {
-            Vector2f wsize = new Vector2f(GetWorld().WorldSize.X, GetWorld().WorldSize.Y);
-            Vector2f pos = new Vector2f(GetBody().Position.X, GetBody().Position.Y);
+            Vector2f pos = new Vector2f(GetBody().Position.X, GetBody().Position.Y) / new Vector2f(GetWorld().WorldSize.X, GetWorld().WorldSize.Y);
             View view = GetWorld().Layer.GetView();
 
             // Position
-            _shape.Position = pos * wsize;
+            _shape.Position = pos * view.Size;
 
             // Scale pancake
             _shape.Scale = new Vector2f(_shape.Scale.X,
-                Math.Max(Math.Abs((pos.Y - view.Size.Y / 2f) / view.Size.Y * 0.45f), 0.03f));
+                Math.Max(Math.Abs((pos.Y - 1f / 2f) / 1f * 0.45f), 0.03f));
 
             // Color
-            float d = pos.Y / view.Size.Y;
-            _shape.FillColor = new Color((byte)(d * 256 / 2 + 256 / 2), (byte)(d * 256 / 2 + 256 / 2), (byte)(d * 256 / 2 + 256 / 2));
+            float d = pos.Y / 1f;
+            _shape.FillColor = new Color((byte)(d * 256 / 2 + 256 / 2), (byte)(d * 256 / 2 + 256 / 2), 0);
 
             // Depth
             _shape.Depth = (int)pos.Y;
 
             // Hitbox
-            _hitbox.SetShape(GetBody());
+            _hitbox.SetShape(GetBody(), new Vector2(view.Size.X / GetWorld().WorldSize.X, view.Size.Y / GetWorld().WorldSize.Y));
         }
         internal override void OnRemoved()
         {
@@ -125,7 +124,28 @@ namespace PM2.GameContent.Game.Entities
         //
         internal override Body CreateBody(PhysicsWorld world, BodyData data)
         {
-            Body body = BodyFactory.CreateRectangle(world, 9f, 0.2f, 1f, data.Position);
+            //
+            const float width = 9f;
+            const float height = 10f;
+            const float botHeight = 0.2f;
+            const float wallWidth = 0.2f;
+
+            //
+            Body body = new Body(world, data.Position, data.Rotation);
+
+            Vertices botVerts = PolygonTools.CreateRectangle(width / 2, botHeight / 2);
+            PolygonShape botShape = new PolygonShape(botVerts, 1f);
+            body.CreateFixture(botShape);
+
+            Vertices wallVerts = PolygonTools.CreateRectangle(wallWidth / 2, height / 2);
+            PolygonShape wallShape = new PolygonShape(wallVerts, 1f);
+            body.CreateFixture(wallShape);
+
+            Vertices wall2Verts = PolygonTools.CreateRectangle(wallWidth / 2, height / 2);
+            PolygonShape wall2Shape = new PolygonShape(wall2Verts, 1f);
+            body.CreateFixture(wall2Shape);
+
+            //
             body.IsStatic = false;
             body.IgnoreGravity = true;
             body.IsKinematic = true;
@@ -140,16 +160,19 @@ namespace PM2.GameContent.Game.Entities
             // Set Target
             _target = target;
 
-            //
-            _targetX = true;
-            _targetY = true;
-
             // Calculate distance
             Vector2 dist = _target - GetBody().Position;
             Vector2 amount = dist;
             amount.Normalize();
+            amount *= 0.1f;
 
             GetBody().LinearVelocity = amount;
+
+            //
+            if (amount.X != 0f)
+                _targetX = true;
+            if (amount.Y != 0f)
+                _targetY = true;
         }
     }
 }
