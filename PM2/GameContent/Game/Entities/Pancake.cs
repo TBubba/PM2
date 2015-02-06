@@ -62,6 +62,7 @@ namespace PM2.GameContent.Game.Entities
         {
             // Remove drawables
             layer.Renderables.Remove(_shape);
+            layer.Renderables.Remove(_hitbox);
         }
 
         //
@@ -70,7 +71,10 @@ namespace PM2.GameContent.Game.Entities
         }
         internal override void OnStep()
         {
-            if (GetBody().Position.Y > GetWorld().WorldSize.Y)
+            if (GetBody().Position.Y > GetWorld().WorldSize.Y ||
+                GetBody().Position.Y < 0f ||
+                GetBody().Position.X > GetWorld().WorldSize.X ||
+                GetBody().Position.X < 0f)
                 GetWorld().Entities.Remove(this);
         }
         internal override void OnAnimate(float delta)

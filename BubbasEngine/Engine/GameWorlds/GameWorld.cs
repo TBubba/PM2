@@ -40,6 +40,8 @@ namespace BubbasEngine.Engine.GameWorlds
         {
             // Create containe
             _entities = new EntityContainer(this);
+            _entities.OnEntityAdded += OnEntityAdded;
+            _entities.OnEntityRemoved += OnEntityRemoved;
             
             //
             _physicsWorld = new PhysicsWorld(new Physics.Common.Vector2());

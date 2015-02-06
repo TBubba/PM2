@@ -21,9 +21,7 @@ namespace PM2.GameContent.Game.Entities
         private BCircleShape _shape;
         private DrawableHitBox _hitbox;
 
-        private Vector2 _target;
-        private bool _targetX;
-        private bool _targetY;
+        private int _stepsToTarget;
 
         // Constructor(s)
         internal PlayerPan()
@@ -70,30 +68,17 @@ namespace PM2.GameContent.Game.Entities
         }
         internal override void OnStep()
         {
-            // Calculate distance
-            Vector2 dist = _target - GetBody().Position;
-            Vector2 amount = dist;
-            amount.Normalize();
-
-            // 
-            if (_targetX)
+            // Target reached
+            if (_stepsToTarget == 1)
             {
-                if (Math.Abs(dist.X) < Math.Abs(amount.X))
-                {
-                    GetBody().LinearVelocity = new Vector2(0f, GetBody().LinearVelocity.Y);
-                    _targetX = false;
-                }
+                // Stop
+                GetBody().LinearVelocity = new Vector2(0f, 0f);
+                _stepsToTarget = 0;
             }
 
-            //
-            if (_targetY)
-            {   
-                if (Math.Abs(dist.Y) < Math.Abs(amount.Y))
-                {
-                    GetBody().LinearVelocity = new Vector2(GetBody().LinearVelocity.X, 0f);
-                    _targetY = false;
-                }
-            }
+            // Step timer (target)
+            if (_stepsToTarget > 0)
+                _stepsToTarget--;
         }
         internal override void OnAnimate(float delta)
         {
@@ -157,24 +142,12 @@ namespace PM2.GameContent.Game.Entities
         //
         internal void SetTargetPosition(Vector2 target)
         {
-            // Set Target
-            _target = target;
+            // Move towards target
+            Vector2 dist = (target - GetBody().Position) / GetWorld().StepTime;
+            GetBody().LinearVelocity = dist;
 
-            // Calculate distance
-            //Vector2 dist = _target - GetBody().Position;
-            //Vector2 amount = dist;
-            //amount.Normalize();
-            //amount *= 0.1f;
-
-            //GetBody().LinearVelocity = amount;
-
-            Vector2 dist = _target - GetBody().Position / GetWorld().StepTime;
-
-            //
-            if (amount.X != 0f)
-                _targetX = true;
-            if (amount.Y != 0f)
-                _targetY = true;
+            // Set "Step timer"
+            _stepsToTarget = 2;
         }
     }
 }

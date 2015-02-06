@@ -87,10 +87,6 @@ namespace PM2.GameContent.Game.Entities
         public void Removed()
         {
             //
-            RemoveContent(_content);
-            RemoveDrawables(_layer);
-
-            //
             OnRemoved();
         }
 

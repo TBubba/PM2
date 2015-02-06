@@ -56,9 +56,6 @@ namespace BubbasEngine.Engine.GameWorlds
             // Add entity to container
             _entities.Add(entity);
 
-            //
-            _world.OnEntityAdded(entity);
-
             // Call event
             if (OnEntityAdded != null)
                 OnEntityAdded(entity);
@@ -86,9 +83,6 @@ namespace BubbasEngine.Engine.GameWorlds
             // Remove entity from container
             _entities.Remove(entity);
 
-            // 
-            _world.OnEntityRemoved(entity);
-
             // Call event
             if (OnEntityRemoved != null)
                 OnEntityRemoved(entity);
@@ -110,8 +104,9 @@ namespace BubbasEngine.Engine.GameWorlds
             GameObject entity = _entities[index];
             _entities.RemoveAt(index);
 
-            // 
-            _world.OnEntityRemoved(entity);
+            // Call event
+            if (OnEntityRemoved != null)
+                OnEntityRemoved(entity);
 
             // Success
             return true;
@@ -145,8 +140,9 @@ namespace BubbasEngine.Engine.GameWorlds
                     // Remove entity from container
                     _entities.Remove(entity);
 
-                    // Tell world that this entity was removed
-                    _world.OnEntityRemoved(entity);
+                    // Call event
+                    if (OnEntityRemoved != null)
+                        OnEntityRemoved(entity);
                 };
             }
 
@@ -186,8 +182,9 @@ namespace BubbasEngine.Engine.GameWorlds
                     // Remove entity from container
                     _entities.RemoveAt(index);
 
-                    // Tell world that this entity was removed
-                    _world.OnEntityRemoved(entity);
+                    // Call event
+                    if (OnEntityRemoved != null)
+                        OnEntityRemoved(entity);
                 };
             }
 
@@ -223,8 +220,9 @@ namespace BubbasEngine.Engine.GameWorlds
                     // Remove entity from container
                     _entities.RemoveAt(index);
 
-                    // Tell world that this entity was removed
-                    _world.OnEntityRemoved(entity);
+                    // Call event
+                    if (OnEntityRemoved != null)
+                        OnEntityRemoved(entity);
                 };
             }
 

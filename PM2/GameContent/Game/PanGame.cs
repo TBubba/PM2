@@ -50,7 +50,7 @@ namespace PM2.GameContent.Game
             _running = true;
 
             //
-            _world.PhysicsWorld.Gravity = new Vector2(0f, 0.1f);
+            _world.PhysicsWorld.Gravity = new Vector2(0f, 2f);
 
             //
             _random = new Random();

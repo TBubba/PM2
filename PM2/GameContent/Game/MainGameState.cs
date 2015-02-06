@@ -40,7 +40,7 @@ namespace PM2.GameContent.Game
             {
                 Players = 1,
                 GameMode = 0,
-                StepTime = _time.StepsPerSecond
+                StepTime = 1f / _time.StepsPerSecond
             });
 
             _game.Initialize(_content, _layer);
