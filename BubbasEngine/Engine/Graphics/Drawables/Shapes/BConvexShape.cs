@@ -45,5 +45,18 @@ namespace BubbasEngine.Engine.Graphics.Drawables.Shapes
         {
             GetShape().SetPointCount(count);
         }
+
+        public void SetShape(Vector2f[] vertecies)
+        {
+            int length = vertecies.Length;
+
+            // Set point count
+            if (PointCount != length)
+                GetShape().SetPointCount((uint)length);
+
+            // Set points
+            for (int i = 0; i < length; i++)
+                SetPoint((uint)i, vertecies[i]);
+        }
     }
 }

@@ -228,7 +228,7 @@ namespace BubbasEngine.Engine.Physics
         /// The maximum linear velocity of a body. This limit is very large and is used
         /// to prevent numerical problems. You shouldn't need to adjust this.
         /// </summary>
-        public const float MaxTranslation = 2.0f;
+        public const float MaxTranslation = 2000.0f;
 
         public const float MaxTranslationSquared = (MaxTranslation * MaxTranslation);
 

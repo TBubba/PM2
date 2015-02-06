@@ -7,12 +7,12 @@ using SFML.Window;
 
 namespace BubbasEngine.Engine.Graphics.Drawables
 {
-    public abstract class Renderable
+    public interface IRenderable
     {
         // Depth
-        internal abstract int GetDepth();
+        int GetDepth();
 
         // Draw
-        internal abstract void Draw(RenderTarget target);
+        void Draw(RenderTarget target);
     }
 }

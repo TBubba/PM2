@@ -45,12 +45,12 @@ namespace PM2.GameContent.Game
 
             //
             _world = new PanWorld(args.StepTime);
-            _world.WorldSize = new Vector2(160f, 90f);
+            _world.WorldSize = new Vector2(16f, 9f) * 6f;
 
             _running = true;
 
             //
-            _world.PhysicsWorld.Gravity = new Vector2(0f, 0.001f);
+            _world.PhysicsWorld.Gravity = new Vector2(0f, 0.1f);
 
             //
             _random = new Random();

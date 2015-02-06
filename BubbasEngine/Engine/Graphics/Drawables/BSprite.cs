@@ -8,7 +8,7 @@ using System.IO;
 
 namespace BubbasEngine.Engine.Graphics.Drawables
 {
-    public class BSprite : Renderable
+    public class BSprite : IRenderable
     {
         // Private
         private Sprite _sprite;
@@ -74,13 +74,13 @@ namespace BubbasEngine.Engine.Graphics.Drawables
         }
 
         // Depth
-        internal override int GetDepth()
+        public int GetDepth()
         {
             return _depth;
         }
 
         // Draw
-        internal override void Draw(RenderTarget target)
+        public void Draw(RenderTarget target)
         {
             // Draw
             _sprite.Draw(target, _state);

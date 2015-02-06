@@ -45,8 +45,8 @@ namespace PM2.GameContent.Game.Entities
 
             // Create pancake circle shape
             _hitbox = new DrawableHitBox();
-            _hitbox.Shape.FillColor = new Color(Color.Red) { A = 125 };
-            _hitbox.Shape.Depth = -100;
+            _hitbox.FillColor = new Color(Color.Red) { A = 125 };
+            _hitbox.Depth = -100;
         }
         internal override void RemoveContent(ContentManager content)
         {
@@ -56,7 +56,7 @@ namespace PM2.GameContent.Game.Entities
         {
             // Add drawables
             layer.Renderables.Add(_shape);
-            layer.Renderables.Add(_hitbox.Shape);
+            layer.Renderables.Add(_hitbox);
         }
         internal override void RemoveDrawables(GraphicsLayer layer)
         {
@@ -70,6 +70,8 @@ namespace PM2.GameContent.Game.Entities
         }
         internal override void OnStep()
         {
+            if (GetBody().Position.Y > GetWorld().WorldSize.Y)
+                GetWorld().Entities.Remove(this);
         }
         internal override void OnAnimate(float delta)
         {
@@ -87,6 +89,9 @@ namespace PM2.GameContent.Game.Entities
             float d = pos.Y / 1f;
             _shape.FillColor = new Color((byte)(d * 256 / 2 + 256 / 2), (byte)(d * 256 / 2 + 256 / 2), 0);
 
+            // Rotation
+            _shape.Rotation = GetBody().Rotation * (360f / ((float)Math.PI * 2f));
+            
             // Depth
             _shape.Depth = (int)pos.Y;
 
@@ -103,7 +108,7 @@ namespace PM2.GameContent.Game.Entities
             Body body = BodyFactory.CreateRectangle(world, 9f, 0.2f, 1f, data.Position);
             body.IsStatic = false;
             body.IsKinematic = false;
-            body.FixedRotation = true;
+            //body.FixedRotation = true;
 
             return body;
         }

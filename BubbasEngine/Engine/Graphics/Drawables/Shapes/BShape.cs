@@ -7,7 +7,7 @@ using SFML.Window;
 
 namespace BubbasEngine.Engine.Graphics.Drawables.Shapes
 {
-    public abstract class BShape : Renderable
+    public abstract class BShape : IRenderable
     {
         // Protected
         protected Shape _shape;
@@ -66,13 +66,13 @@ namespace BubbasEngine.Engine.Graphics.Drawables.Shapes
         }
 
         // Depth
-        internal override int GetDepth()
+        public int GetDepth()
         {
             return _depth;
         }
 
         // Draw
-        internal override void Draw(RenderTarget target)
+        public void Draw(RenderTarget target)
         {
             // Draw
             _shape.Draw(target, _state);

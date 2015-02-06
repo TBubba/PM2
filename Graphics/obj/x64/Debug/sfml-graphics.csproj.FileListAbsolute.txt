@@ -1,6 +1,0 @@
-C:\GitHub\lib\x64\sfmlnet-graphics-2.dll
-C:\GitHub\lib\x64\sfmlnet-graphics-2.pdb
-C:\GitHub\lib\x64\graphics-doc.xml
-C:\GitHub\PM2\Graphics\obj\x64\Debug\sfml-graphics.csprojResolveAssemblyReference.cache
-C:\GitHub\PM2\Graphics\obj\x64\Debug\sfmlnet-graphics-2.dll
-C:\GitHub\PM2\Graphics\obj\x64\Debug\sfmlnet-graphics-2.pdb

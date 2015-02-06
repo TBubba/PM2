@@ -45,8 +45,8 @@ namespace PM2.GameContent.Game.Entities
 
             // Create pancake circle shape
             _hitbox = new DrawableHitBox();
-            _hitbox.Shape.FillColor = new Color(Color.Blue) { A = 125 };
-            _hitbox.Shape.Depth = -100;
+            _hitbox.FillColor = new Color(Color.Blue) { A = 125 };
+            _hitbox.Depth = -100;
         }
         internal override void RemoveContent(ContentManager content)
         {
@@ -56,7 +56,7 @@ namespace PM2.GameContent.Game.Entities
         {
             // Add drawables
             layer.Renderables.Add(_shape);
-            layer.Renderables.Add(_hitbox.Shape);
+            layer.Renderables.Add(_hitbox);
         }
         internal override void RemoveDrawables(GraphicsLayer layer)
         {
@@ -125,8 +125,8 @@ namespace PM2.GameContent.Game.Entities
         internal override Body CreateBody(PhysicsWorld world, BodyData data)
         {
             //
-            const float width = 9f;
-            const float height = 10f;
+            const float width = 11f;
+            const float height = 0.2f;
             const float botHeight = 0.2f;
             const float wallWidth = 0.2f;
 
@@ -137,13 +137,13 @@ namespace PM2.GameContent.Game.Entities
             PolygonShape botShape = new PolygonShape(botVerts, 1f);
             body.CreateFixture(botShape);
 
-            Vertices wallVerts = PolygonTools.CreateRectangle(wallWidth / 2, height / 2);
-            PolygonShape wallShape = new PolygonShape(wallVerts, 1f);
-            body.CreateFixture(wallShape);
+            //Vertices wallVerts = PolygonTools.CreateRectangle(wallWidth / 2, height, new Vector2(-width / 2f, -height), 0f);
+            //PolygonShape wallShape = new PolygonShape(wallVerts, 1f);
+            //body.CreateFixture(wallShape);
 
-            Vertices wall2Verts = PolygonTools.CreateRectangle(wallWidth / 2, height / 2);
-            PolygonShape wall2Shape = new PolygonShape(wall2Verts, 1f);
-            body.CreateFixture(wall2Shape);
+            //Vertices wall2Verts = PolygonTools.CreateRectangle(wallWidth / 2, height, new Vector2((width / 2f) - wallWidth, -height), 0f);
+            //PolygonShape wall2Shape = new PolygonShape(wall2Verts, 1f);
+            //body.CreateFixture(wall2Shape);
 
             //
             body.IsStatic = false;
@@ -161,12 +161,14 @@ namespace PM2.GameContent.Game.Entities
             _target = target;
 
             // Calculate distance
-            Vector2 dist = _target - GetBody().Position;
-            Vector2 amount = dist;
-            amount.Normalize();
-            amount *= 0.1f;
+            //Vector2 dist = _target - GetBody().Position;
+            //Vector2 amount = dist;
+            //amount.Normalize();
+            //amount *= 0.1f;
 
-            GetBody().LinearVelocity = amount;
+            //GetBody().LinearVelocity = amount;
+
+            Vector2 dist = _target - GetBody().Position / GetWorld().StepTime;
 
             //
             if (amount.X != 0f)

@@ -6,7 +6,7 @@ using SFML.Graphics;
 
 namespace BubbasEngine.Engine.Graphics.Drawables
 {
-    public class BVertexArray : Renderable
+    public class BVertexArray : IRenderable
     {
         // Private
         private VertexArray _vertices;
@@ -73,13 +73,13 @@ namespace BubbasEngine.Engine.Graphics.Drawables
         }
 
         // Depth
-        internal override int GetDepth()
+        public int GetDepth()
         {
             return _depth;
         }
 
         // Draw
-        internal override void Draw(RenderTarget target)
+        public void Draw(RenderTarget target)
         {
             // Draw
             _vertices.Draw(target, _state);

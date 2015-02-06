@@ -7,7 +7,7 @@ using SFML.Graphics;
 
 namespace BubbasEngine.Engine.Graphics.Drawables
 {
-    public class BText : Renderable
+    public class BText : IRenderable
     {
         // Private
         private Text _text;
@@ -63,13 +63,13 @@ namespace BubbasEngine.Engine.Graphics.Drawables
         }
 
         // Depth
-        internal override int GetDepth()
+        public int GetDepth()
         {
             return _depth;
         }
 
         // Draw
-        internal override void Draw(RenderTarget target)
+        public void Draw(RenderTarget target)
         {
             // Draw
             _text.Draw(target, _state);

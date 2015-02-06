@@ -122,11 +122,12 @@ namespace PM2.GameContent.Game.Entities
         public override string ToString()
         {
             Vector2 position = Vector2.NaN;
-            float rotation = float.NaN;
+            int rotation = 0;
             if (_body != null)
             {
                 position = _body.Position;
-                rotation = _body.Rotation;
+                rotation = (int)_body.Rotation % 359;
+                if (Math.Sign(rotation) == -1) rotation += 360;
             }
 
             return "[" + GetType().Name + "]" +

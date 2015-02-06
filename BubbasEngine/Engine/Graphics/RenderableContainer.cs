@@ -7,12 +7,12 @@ using SFML.Graphics;
 
 namespace BubbasEngine.Engine.Graphics
 {
-    public delegate void RenderableEventDelegate(Renderable renderable);
+    public delegate void RenderableEventDelegate(IRenderable renderable);
 
     public class RenderableContainer
     {
         // Private
-        private List<Renderable> _renderables;
+        private List<IRenderable> _renderables;
 
         // Public
         public int Count
@@ -23,7 +23,7 @@ namespace BubbasEngine.Engine.Graphics
         public event RenderableEventDelegate OnRenderableRemoved;
 
         // Container
-        public Renderable this[int index]
+        public IRenderable this[int index]
         {
             get { return _renderables[index]; }
         }
@@ -31,7 +31,7 @@ namespace BubbasEngine.Engine.Graphics
         // Constructor(s)
         internal RenderableContainer()
         {
-            _renderables = new List<Renderable>();
+            _renderables = new List<IRenderable>();
         }
 
         // Render
@@ -47,7 +47,7 @@ namespace BubbasEngine.Engine.Graphics
         }
 
         // Handle layers
-        public bool Add(Renderable renderable)
+        public bool Add(IRenderable renderable)
         {
             // Abort if parameter is null
             if (renderable == null)
@@ -70,7 +70,7 @@ namespace BubbasEngine.Engine.Graphics
             return true;
         }
 
-        public bool Remove(Renderable renderable)
+        public bool Remove(IRenderable renderable)
         {
             // Abort if parameter is null
             if (renderable == null)
@@ -143,7 +143,7 @@ namespace BubbasEngine.Engine.Graphics
         }
 
         //
-        public bool Contains(Renderable rend)
+        public bool Contains(IRenderable rend)
         {
             // Compare paramter layer reference to every layer in the container
             int length = _renderables.Count;
