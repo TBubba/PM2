@@ -58,6 +58,7 @@
     <Compile Include="Engine\GameWorlds\GameInterfaces\IGameRemoved.cs" />
     <Compile Include="Engine\GameWorlds\GameInterfaces\IGameStep.cs" />
     <Compile Include="Engine\GameWorlds\GameWorld.cs" />
+    <Compile Include="Engine\Graphics\Drawables\Shapes\BBodyShape.cs" />
     <Compile Include="Engine\Graphics\RenderableContainer.cs" />
     <Compile Include="Engine\Graphics\Drawables\Shapes\BCircleShape.cs" />
     <Compile Include="Engine\Graphics\Drawables\Shapes\BConvexShape.cs" />

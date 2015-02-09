@@ -11,7 +11,6 @@ using BubbasEngine.Engine.Physics.Common;
 using BubbasEngine.Engine.Physics.Dynamics;
 using BubbasEngine.Engine.Physics.Factories;
 using BubbasEngine.Engine.Physics.Collision.Shapes;
-using PM2.GameContent.Game.Drawables;
 
 namespace PM2.GameContent.Game.Entities
 {
@@ -19,7 +18,6 @@ namespace PM2.GameContent.Game.Entities
     {
         // Private
         private BCircleShape _shape;
-        private DrawableHitBox _hitbox;
 
         private int _stepsToTarget;
 
@@ -42,7 +40,6 @@ namespace PM2.GameContent.Game.Entities
             _shape.Origin = new Vector2f(_shape.Radius, _shape.Radius);
 
             // Create pancake circle shape
-            _hitbox = new DrawableHitBox();
             _hitbox.FillColor = new Color(Color.Blue) { A = 125 };
             _hitbox.Depth = -100;
         }
@@ -54,12 +51,17 @@ namespace PM2.GameContent.Game.Entities
         {
             // Add drawables
             layer.Renderables.Add(_shape);
-            layer.Renderables.Add(_hitbox);
+
+            //
+            base.AddDrawables(layer);
         }
         internal override void RemoveDrawables(GraphicsLayer layer)
         {
-            // Add drawables
+            // Remove drawables
             layer.Renderables.Remove(_shape);
+
+            //
+            base.RemoveDrawables(layer);
         }
 
         //

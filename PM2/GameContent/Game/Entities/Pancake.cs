@@ -13,7 +13,6 @@ using SFML.Graphics;
 using SFML.Window;
 using BubbasEngine.Engine.Physics.Factories;
 using BubbasEngine.Engine.Physics.Dynamics;
-using PM2.GameContent.Game.Drawables;
 using BubbasEngine.Engine;
 
 namespace PM2.GameContent.Game.Entities
@@ -22,7 +21,6 @@ namespace PM2.GameContent.Game.Entities
     {
         // Private
         private BCircleShape _shape;
-        private DrawableHitBox _hitbox;
         
         // Constructor(s)
         internal Pancake()
@@ -44,7 +42,6 @@ namespace PM2.GameContent.Game.Entities
             _shape.FillColor = Color.Yellow;
 
             // Create pancake circle shape
-            _hitbox = new DrawableHitBox();
             _hitbox.FillColor = new Color(Color.Red) { A = 125 };
             _hitbox.Depth = -100;
         }
@@ -56,13 +53,17 @@ namespace PM2.GameContent.Game.Entities
         {
             // Add drawables
             layer.Renderables.Add(_shape);
-            layer.Renderables.Add(_hitbox);
+
+            //
+            base.AddDrawables(layer);
         }
         internal override void RemoveDrawables(GraphicsLayer layer)
         {
             // Remove drawables
             layer.Renderables.Remove(_shape);
-            layer.Renderables.Remove(_hitbox);
+
+            //
+            base.RemoveDrawables(layer);
         }
 
         //

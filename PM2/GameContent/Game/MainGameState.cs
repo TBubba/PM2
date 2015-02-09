@@ -43,7 +43,7 @@ namespace PM2.GameContent.Game
                 StepTime = 1f / _time.StepsPerSecond
             });
 
-            _game.Initialize(_content, _layer);
+            _game.Initialize(_content, _graphics.Layers);
 
             //
             _keys.AddOnPressed(Keyboard.Key.Escape,

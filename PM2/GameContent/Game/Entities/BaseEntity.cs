@@ -10,6 +10,7 @@ using SFML.Window;
 using BubbasEngine.Engine.Physics.Common;
 using BubbasEngine.Engine.Physics.Dynamics;
 using BubbasEngine.Engine.Physics.Factories;
+using BubbasEngine.Engine.Graphics.Drawables.Shapes;
 
 namespace PM2.GameContent.Game.Entities
 {
@@ -19,8 +20,15 @@ namespace PM2.GameContent.Game.Entities
         private Body _body;
         private BodyData _bodyData;
 
+        protected BBodyShape _hitbox
+        { get; private set; }
+
         private ContentManager _content;
         private GraphicsLayer _layer;
+
+        // Internal
+        internal BBodyShape Hitbox
+        { get { return _hitbox; } }
 
         // Constructor(s)
         internal BaseEntity()
@@ -30,6 +38,7 @@ namespace PM2.GameContent.Game.Entities
         internal BaseEntity(BodyData data)
         {
             _bodyData = data;
+            _hitbox = new BBodyShape();
         }
 
         // World
@@ -57,10 +66,12 @@ namespace PM2.GameContent.Game.Entities
             _layer = layer;
 
             // Add drawables to renderer
+            layer.Renderables.Add(_hitbox);
         }
         internal virtual void RemoveDrawables(GraphicsLayer layer)
         {
             // Remove drawables from renderer
+            layer.Renderables.Remove(_hitbox);
         }
 
         //

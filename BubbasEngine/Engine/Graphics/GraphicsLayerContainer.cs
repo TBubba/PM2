@@ -78,7 +78,6 @@ namespace BubbasEngine.Engine.Graphics
             // Success
             return true;
         }
-
         public bool RemoveAt(int index)
         {
             // Abort if index is out of bounds
@@ -94,7 +93,6 @@ namespace BubbasEngine.Engine.Graphics
             // Success
             return true;
         }
-
         public int RemoveAll()
         {
             // Abort if the container is empty

@@ -61,7 +61,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GameContent\Game\Drawables\DrawableHitBox.cs" />
     <Compile Include="GameContent\Game\Entities\BaseEntity.cs" />
     <Compile Include="GameContent\Game\Entities\BodyData.cs" />
     <Compile Include="GameContent\Game\Entities\Pancake.cs" />
@@ -116,7 +115,9 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="GameContent\Game\Drawables\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

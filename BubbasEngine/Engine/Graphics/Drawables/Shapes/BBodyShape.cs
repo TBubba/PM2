@@ -2,18 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using BubbasEngine.Engine.Graphics.Drawables.Shapes;
-using SFML.Window;
-using BubbasEngine.Engine.Physics.Collision.Shapes;
+using SFML.Graphics;
 using BubbasEngine.Engine.Physics.Dynamics;
 using BubbasEngine.Engine.Physics.Common;
-using System.Collections.ObjectModel;
-using SFML.Graphics;
-using BubbasEngine.Engine.Graphics.Drawables;
+using SFML.Window;
+using BubbasEngine.Engine.Physics.Collision.Shapes;
 
-namespace PM2.GameContent.Game.Drawables
+namespace BubbasEngine.Engine.Graphics.Drawables.Shapes
 {
-    internal class DrawableHitBox : IRenderable
+    public class BBodyShape : IRenderable
     {
         // Private
         private List<BConvexShape> _shapes;
@@ -22,27 +19,27 @@ namespace PM2.GameContent.Game.Drawables
         private Color _fillColor;
 
         //
-        internal int Depth
+        public int Depth
         { get { return _depth; } set { _depth = value; } }
-        internal Color FillColor
+        public Color FillColor
         { get { return _fillColor; } set { SetFillColor(value); } }
 
         // Constrcutor(s)
-        internal DrawableHitBox()
+        public BBodyShape()
         {
             _shapes = new List<BConvexShape>();
         }
 
         //
-        internal void SetShape(Body body)
+        public void SetShape(Body body)
         {
             SetShape(body, Vector2.One);
         }
-        internal void SetShape(Body body, float scale)
+        public void SetShape(Body body, float scale)
         {
             SetShape(body, Vector2.One * scale);
         }
-        internal void SetShape(Body body, Vector2 scale)
+        public void SetShape(Body body, Vector2 scale)
         {
             //
             int fCount = body.FixtureList.Count;

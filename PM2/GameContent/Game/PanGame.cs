@@ -24,7 +24,13 @@ namespace PM2.GameContent.Game
         private bool _running;
         private PanGameArgs _args;
 
-        private GraphicsLayer _layer;
+        private ContentManager _content;
+        private GraphicsLayerContainer _layers;
+
+        private GraphicsLayer _gameLayer;
+        private GraphicsLayer _backgroundLayer;
+        private GraphicsLayer _debugLayer;
+
         private BText _debugText;
 
         private Random _random;
@@ -36,6 +42,9 @@ namespace PM2.GameContent.Game
 
         internal bool Running
         { get { return _running; } }
+
+        internal bool ShowDebug
+        { get { return !_debugLayer.Hide; } set { _debugLayer.Hide = !value; } }
 
         // Constructor(s)
         internal PanGame(PanGameArgs args)
@@ -50,7 +59,7 @@ namespace PM2.GameContent.Game
             _running = true;
 
             //
-            _world.PhysicsWorld.Gravity = new Vector2(0f, 2f);
+            _world.PhysicsWorld.Gravity = new Vector2(0f, 10f);
 
             //
             _random = new Random();
@@ -67,13 +76,15 @@ namespace PM2.GameContent.Game
         }
 
         // Initialize
-        internal void Initialize(ContentManager content, GraphicsLayer layer)
+        internal void Initialize(ContentManager content, GraphicsLayerContainer layers)
         {
-            // Keep ref
-            _layer = layer;
+            // Create layers
+            _backgroundLayer = layers.Create();
+            _gameLayer = layers.Create();
+            _debugLayer = layers.Create();
 
             // Initialize world
-            _world.Initialize(content, layer);
+            _world.Initialize(content, _gameLayer);
 
             //
             int length = _args.Players;
@@ -128,7 +139,7 @@ namespace PM2.GameContent.Game
             _debugText.Font = content.GetFont(fontPath);
 
             //
-            _layer.Renderables.Add(_debugText);
+            _debugLayer.Renderables.Add(_debugText);
         }
         internal void UnloadContent(ContentManager content)
         {
