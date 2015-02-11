@@ -27,10 +27,6 @@ namespace PM2.GameContent.Game
         private ContentManager _content;
         private GraphicsLayerContainer _layers;
 
-        private GraphicsLayer _gameLayer;
-        private GraphicsLayer _backgroundLayer;
-        private GraphicsLayer _debugLayer;
-
         private BText _debugText;
 
         private Random _random;
@@ -44,7 +40,7 @@ namespace PM2.GameContent.Game
         { get { return _running; } }
 
         internal bool ShowDebug
-        { get { return !_debugLayer.Hide; } set { _debugLayer.Hide = !value; } }
+        { get { return !_world.DebugLayer.Hide; } set { _world.DebugLayer.Hide = !value; } }
 
         // Constructor(s)
         internal PanGame(PanGameArgs args)
@@ -59,7 +55,7 @@ namespace PM2.GameContent.Game
             _running = true;
 
             //
-            _world.PhysicsWorld.Gravity = new Vector2(0f, 10f);
+            _world.PhysicsWorld.Gravity = new Vector2(0f, 20f);
 
             //
             _random = new Random();
@@ -78,13 +74,12 @@ namespace PM2.GameContent.Game
         // Initialize
         internal void Initialize(ContentManager content, GraphicsLayerContainer layers)
         {
-            // Create layers
-            _backgroundLayer = layers.Create();
-            _gameLayer = layers.Create();
-            _debugLayer = layers.Create();
+            // Keep ref
+            _content = content;
+            _layers = layers;
 
             // Initialize world
-            _world.Initialize(content, _gameLayer);
+            _world.Initialize(content, layers);
 
             //
             int length = _args.Players;
@@ -127,21 +122,21 @@ namespace PM2.GameContent.Game
         }
 
         // Content
-        internal void LoadContent(ContentManager content)
+        internal void LoadContent()
         {
             //
             const string fontPath = @"Common\Fonts\WhiteRabbit.ttf";
 
             //
-            content.RequestFont(fontPath);
+            _content.RequestFont(fontPath);
 
             //
-            _debugText.Font = content.GetFont(fontPath);
+            _debugText.Font = _content.GetFont(fontPath);
 
             //
-            _debugLayer.Renderables.Add(_debugText);
+            _world.DebugLayer.Renderables.Add(_debugText);
         }
-        internal void UnloadContent(ContentManager content)
+        internal void UnloadContent()
         {
 
         }

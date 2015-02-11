@@ -44,17 +44,6 @@ namespace PM2.GameContent.Game
             });
 
             _game.Initialize(_content, _graphics.Layers);
-
-            //
-            _keys.AddOnPressed(Keyboard.Key.Escape,
-                new KeyboardBinding(new KeyboardInputDele(delegate
-                {
-                    // Pause or Resume
-                    if (_game.Running)
-                        _game.Pause();
-                    else
-                        _game.Run();
-                })));
         }
 
         public override void LoadContent()
@@ -70,6 +59,23 @@ namespace PM2.GameContent.Game
             float halfHeight = (float)(_graphics.RenderHeight / 2u);
 
             //
+            _keys.AddOnPressed(Keyboard.Key.Escape,
+                new KeyboardBinding(new KeyboardInputDele(delegate
+                {
+                    // Pause or Resume
+                    if (_game.Running)
+                        _game.Pause();
+                    else
+                        _game.Run();
+                })));
+            _keys.AddOnPressed(Keyboard.Key.F3,
+                new KeyboardBinding(new KeyboardInputDele(delegate
+                {
+                    // Hide or Show debug
+                    _game.ShowDebug = !_game.ShowDebug;
+                })));
+
+            //
             _mouse.AddOnPressed(Mouse.Button.Left, new MouseButtonBinding((x, y) =>
             {
                 for (int i = 0; i < 10; i++ )
@@ -81,7 +87,7 @@ namespace PM2.GameContent.Game
             }));
 
             // Load world content
-            _game.LoadContent(_content);
+            _game.LoadContent();
 
             // Apply Keybindings
             _keys.Apply(_input.Keyboard);
@@ -109,7 +115,7 @@ namespace PM2.GameContent.Game
             //content.DEQUSET(this, @"intro\logo.png");
 
             // Unload
-            _game.UnloadContent(_content);
+            _game.UnloadContent();
 
             // Remove Keybindings
             _keys.Remove(_input.Keyboard);

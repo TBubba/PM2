@@ -102,7 +102,7 @@ namespace BubbasEngine.Engine.Physics
         /// <summary>
         /// Enable/Disable sleeping
         /// </summary>
-        public static bool AllowSleep = true;
+        public static bool AllowSleep = false;
 
         /// <summary>
         /// The maximum number of vertices on a convex polygon.
@@ -148,7 +148,7 @@ namespace BubbasEngine.Engine.Physics
         /// to move by a small amount without triggering a tree adjustment.
         /// This is in meters.
         /// </summary>
-        public const float AABubbasEnginextension = 0.1f;
+        public const float AABBExtension = 0.1f;
 
         /// <summary>
         /// This is used to fatten AABBs in the dynamic tree. This is used to predict
@@ -187,7 +187,7 @@ namespace BubbasEngine.Engine.Physics
         /// A velocity threshold for elastic collisions. Any collision with a relative linear
         /// velocity below this threshold will be treated as inelastic.
         /// </summary>
-        public const float VelocityThreshold = 100.0f;
+        public const float VelocityThreshold = 1.0f;
 
         /// <summary>
         /// The maximum linear position correction used when solving constraints. This helps to
@@ -228,7 +228,7 @@ namespace BubbasEngine.Engine.Physics
         /// The maximum linear velocity of a body. This limit is very large and is used
         /// to prevent numerical problems. You shouldn't need to adjust this.
         /// </summary>
-        public const float MaxTranslation = 2000.0f;
+        public const float MaxTranslation = 200000.0f;
 
         public const float MaxTranslationSquared = (MaxTranslation * MaxTranslation);
 

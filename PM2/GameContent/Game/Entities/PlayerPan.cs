@@ -36,7 +36,7 @@ namespace PM2.GameContent.Game.Entities
         {
             // Create pancake circle shape
             _shape = new BCircleShape(45f, 32);
-            _shape.Position = GetWorld().Layer.GetView().Size / 2f;
+            _shape.Position = GetWorld().MainLayer.GetView().Size / 2f;
             _shape.Origin = new Vector2f(_shape.Radius, _shape.Radius);
 
             // Create pancake circle shape
@@ -47,21 +47,21 @@ namespace PM2.GameContent.Game.Entities
         {
 
         }
-        internal override void AddDrawables(GraphicsLayer layer)
+        internal override void AddDrawables(GraphicsLayer gameLayer, GraphicsLayer hitboxLayer)
         {
             // Add drawables
-            layer.Renderables.Add(_shape);
+            gameLayer.Renderables.Add(_shape);
 
             //
-            base.AddDrawables(layer);
+            base.AddDrawables(gameLayer, hitboxLayer);
         }
-        internal override void RemoveDrawables(GraphicsLayer layer)
+        internal override void RemoveDrawables(GraphicsLayer gameLayer, GraphicsLayer hitboxLayer)
         {
             // Remove drawables
-            layer.Renderables.Remove(_shape);
+            gameLayer.Renderables.Remove(_shape);
 
             //
-            base.RemoveDrawables(layer);
+            base.RemoveDrawables(gameLayer, hitboxLayer);
         }
 
         //
@@ -85,7 +85,7 @@ namespace PM2.GameContent.Game.Entities
         internal override void OnAnimate(float delta)
         {
             Vector2f pos = new Vector2f(GetBody().Position.X, GetBody().Position.Y) / new Vector2f(GetWorld().WorldSize.X, GetWorld().WorldSize.Y);
-            View view = GetWorld().Layer.GetView();
+            View view = GetWorld().MainLayer.GetView();
 
             // Position
             _shape.Position = pos * view.Size;
@@ -99,7 +99,7 @@ namespace PM2.GameContent.Game.Entities
             _shape.FillColor = new Color((byte)(d * 256 / 2 + 256 / 2), (byte)(d * 256 / 2 + 256 / 2), 0);
 
             // Depth
-            _shape.Depth = (int)pos.Y;
+            _shape.Depth = (int)pos.Y * 10;
 
             // Hitbox
             _hitbox.SetShape(GetBody(), new Vector2(view.Size.X / GetWorld().WorldSize.X, view.Size.Y / GetWorld().WorldSize.Y));
@@ -112,7 +112,7 @@ namespace PM2.GameContent.Game.Entities
         internal override Body CreateBody(PhysicsWorld world, BodyData data)
         {
             //
-            const float width = 11f;
+            const float width = 7f;
             const float height = 0.2f;
             const float botHeight = 0.2f;
             const float wallWidth = 0.2f;
@@ -137,6 +137,8 @@ namespace PM2.GameContent.Game.Entities
             body.IgnoreGravity = true;
             body.IsKinematic = true;
             body.FixedRotation = true;
+
+            body.SleepingAllowed = false;
 
             return body;
         }

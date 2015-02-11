@@ -13,6 +13,8 @@ namespace BubbasEngine.Engine.GameWorlds
         private List<GameObject> _entities;
         private GameWorld _world;
 
+        private Dictionary<Type, int> _counts;
+
         // Public
         public int Count
         { get { return _entities.Count; } }
@@ -31,6 +33,9 @@ namespace BubbasEngine.Engine.GameWorlds
         {
             // Create private container
             _entities = new List<GameObject>();
+
+            // Counters
+            _counts = new Dictionary<Type, int>();
 
             // Keep reference to world (bound to world)
             _world = world;
@@ -55,6 +60,9 @@ namespace BubbasEngine.Engine.GameWorlds
 
             // Add entity to container
             _entities.Add(entity);
+
+            // Update counter
+            AddCount(entity.GetType());
 
             // Call event
             if (OnEntityAdded != null)
@@ -235,7 +243,7 @@ namespace BubbasEngine.Engine.GameWorlds
         }
 
         //
-        internal bool Contains(GameObject entity)
+        public bool Contains(GameObject entity)
         {
             // Compare paramter entity reference to every entity in the container
             int length = _entities.Count;
@@ -247,6 +255,31 @@ namespace BubbasEngine.Engine.GameWorlds
 
             // Failed to find entity in the collection
             return false;
+        }
+
+        // Counters
+        private void AddCount(Type type)
+        {
+            // Add entity to counter
+            if (!_counts.ContainsKey(type))
+                _counts.Add(type, 1);
+            else
+                _counts[type] += 1;
+        }
+        private void RemoveCount(Type type)
+        {
+            // Remove entity from counter
+            _counts[type] -= 1;
+
+            if (_counts[type] <= 0)
+                _counts.Remove(type);
+        }
+
+        public int CountType(Type type)
+        {
+            if (!_counts.ContainsKey(type))
+                return 0;
+            return _counts[type];
         }
     }
 }

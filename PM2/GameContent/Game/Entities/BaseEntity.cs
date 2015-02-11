@@ -24,7 +24,6 @@ namespace PM2.GameContent.Game.Entities
         { get; private set; }
 
         private ContentManager _content;
-        private GraphicsLayer _layer;
 
         // Internal
         internal BBodyShape Hitbox
@@ -60,18 +59,15 @@ namespace PM2.GameContent.Game.Entities
             // Dequest content (and remove drawables?)
         }
 
-        internal virtual void AddDrawables(GraphicsLayer layer)
+        internal virtual void AddDrawables(GraphicsLayer gameLayer, GraphicsLayer hitboxLayer)
         {
-            // Keep reference
-            _layer = layer;
-
             // Add drawables to renderer
-            layer.Renderables.Add(_hitbox);
+            hitboxLayer.Renderables.Add(_hitbox);
         }
-        internal virtual void RemoveDrawables(GraphicsLayer layer)
+        internal virtual void RemoveDrawables(GraphicsLayer gameLayer, GraphicsLayer hitboxLayer)
         {
             // Remove drawables from renderer
-            layer.Renderables.Remove(_hitbox);
+            hitboxLayer.Renderables.Remove(_hitbox);
         }
 
         //
@@ -102,7 +98,7 @@ namespace PM2.GameContent.Game.Entities
         }
 
         //
-        internal Body GetBody()
+        public Body GetBody()
         {
             return _body;
         }
@@ -129,17 +125,27 @@ namespace PM2.GameContent.Game.Entities
         public override string ToString()
         {
             Vector2 position = Vector2.NaN;
+            Vector2 velocity = Vector2.NaN;
+
             int rotation = 0;
+            float angular = 0f;
+
             if (_body != null)
             {
                 position = _body.Position;
+                velocity = _body.LinearVelocity;
+
                 rotation = (int)_body.Rotation % 359;
                 if (Math.Sign(rotation) == -1) rotation += 360;
+
+                angular = _body.AngularVelocity;
             }
 
             return "[" + GetType().Name + "]" +
                    string.Format("{0}", " Pos(" + string.Format("{0,9:0.000};{1,9:0.000}", position.X, position.Y) + ")") +
-                   " Rot(" + string.Format("{0:000}", rotation) + ")";
+                   string.Format("{0}", " Vel(" + string.Format("{0,8:0.000};{1,8:0.000}", velocity.X, velocity.Y) + ")") +
+                   " Rot(" + string.Format("{0:000}", rotation) + ")" +
+                    " Ang(" + string.Format("{0,5:00.0}", angular) + ")";
         }
     }
 }

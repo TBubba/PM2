@@ -96,6 +96,14 @@ namespace BubbasEngine.Engine.GameWorlds
             // Remove reference to this world from entity
             entity.RemoveFromWorld();
 
+            // Remove body
+            if (entity is IGamePhysics)
+                _beginFrame += delegate {
+                    Body body = ((IGamePhysics)entity).GetBody();
+                    if (_physicsWorld.BodyList.Contains(body))
+                        _physicsWorld.RemoveBody(body);
+                };
+
             // Remove entity calls
             RemoveEntityCalls(entity);
 

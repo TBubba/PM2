@@ -185,7 +185,7 @@ namespace BubbasEngine.Engine.Physics.Collision
             int proxyId = AllocateNode();
 
             // Fatten the aabb.
-            Vector2 r = new Vector2(Settings.AABubbasEnginextension, Settings.AABubbasEnginextension);
+            Vector2 r = new Vector2(Settings.AABBExtension, Settings.AABBExtension);
             _nodes[proxyId].AABB.LowerBound = aabb.LowerBound - r;
             _nodes[proxyId].AABB.UpperBound = aabb.UpperBound + r;
             _nodes[proxyId].UserData = userData;
@@ -233,7 +233,7 @@ namespace BubbasEngine.Engine.Physics.Collision
 
             // Extend AABB.
             AABB b = aabb;
-            Vector2 r = new Vector2(Settings.AABubbasEnginextension, Settings.AABubbasEnginextension);
+            Vector2 r = new Vector2(Settings.AABBExtension, Settings.AABBExtension);
             b.LowerBound = b.LowerBound - r;
             b.UpperBound = b.UpperBound + r;
 
