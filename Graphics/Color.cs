@@ -85,6 +85,12 @@ namespace SFML
             /// <summary>Predefined black color</summary>
             public static readonly Color Black = new Color(0, 0, 0);
 
+            /// <summary>Predefined dark gray color</summary>
+            public static readonly Color DarkGray = new Color(139, 137, 137);
+
+            /// <summary>Predefined light gray color</summary>
+            public static readonly Color Gray = new Color(238, 233, 233);
+
             /// <summary>Predefined white color</summary>
             public static readonly Color White = new Color(255, 255, 255);
 

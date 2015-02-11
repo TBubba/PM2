@@ -40,7 +40,7 @@ namespace PM2.GameContent.Game.Entities
             _shape.Origin = new Vector2f(_shape.Radius, _shape.Radius);
 
             // Create pancake circle shape
-            _hitbox.FillColor = new Color(Color.Blue) { A = 125 };
+            _hitbox.FillColor = new Color(Color.Yellow) { A = 125 };
             _hitbox.Depth = -100;
         }
         internal override void RemoveContent(ContentManager content)
@@ -96,7 +96,7 @@ namespace PM2.GameContent.Game.Entities
 
             // Color
             float d = pos.Y / 1f;
-            _shape.FillColor = new Color((byte)(d * 256 / 2 + 256 / 2), (byte)(d * 256 / 2 + 256 / 2), 0);
+            _shape.FillColor = new Color((byte)(d * 256 / 2 + 256 / 2), (byte)(d * 256 / 2 + 256 / 2), (byte)(d * 256 / 2 + 256 / 2));
 
             // Depth
             _shape.Depth = (int)pos.Y * 10;
@@ -137,8 +137,7 @@ namespace PM2.GameContent.Game.Entities
             body.IgnoreGravity = true;
             body.IsKinematic = true;
             body.FixedRotation = true;
-
-            body.SleepingAllowed = false;
+            body.Friction = 1f;
 
             return body;
         }

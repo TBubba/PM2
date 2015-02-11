@@ -129,7 +129,8 @@ namespace PM2.GameContent.Game.Entities
             body.IsKinematic = false;
             //body.FixedRotation = true;
 
-            body.LinearDamping = 0.1f;
+            body.LinearDamping = 0.4f;
+            body.Friction = 0.2f;
 
             return body;
         }
