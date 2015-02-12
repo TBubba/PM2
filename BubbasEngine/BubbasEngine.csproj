@@ -82,7 +82,7 @@
     <Compile Include="Engine\Content\ContentTypes\RefTexture.cs" />
     <Compile Include="Engine\GameStates\GameStateManagerArgs.cs" />
     <Compile Include="Engine\Graphics\Drawables\BSprite.cs" />
-    <Compile Include="Engine\Graphics\Drawables\Renderable.cs" />
+    <Compile Include="Engine\Graphics\Drawables\IRenderable.cs" />
     <Compile Include="Engine\Graphics\GraphicsLayer.cs" />
     <Compile Include="Engine\Graphics\GraphicsRenderer.cs" />
     <Compile Include="Engine\Graphics\GraphicsRendererArgs.cs" />

@@ -61,6 +61,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GameContent\Game\Drawables\DrawableIndicator.cs" />
     <Compile Include="GameContent\Game\Drawables\DrawablePlate.cs" />
     <Compile Include="GameContent\Game\Entities\BaseEntity.cs" />
     <Compile Include="GameContent\Game\Entities\BodyData.cs" />
@@ -75,6 +76,7 @@
     <Compile Include="GameContent\MainMenu\MainMenuGameState.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Settings.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Audio\sfml-audio.csproj">

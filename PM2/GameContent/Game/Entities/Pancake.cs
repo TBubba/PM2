@@ -14,13 +14,14 @@ using SFML.Window;
 using BubbasEngine.Engine.Physics.Factories;
 using BubbasEngine.Engine.Physics.Dynamics;
 using BubbasEngine.Engine;
+using PM2.GameContent.Game.Drawables;
 
 namespace PM2.GameContent.Game.Entities
 {
     internal class Pancake : BaseEntity
     {
         // Private
-        private BCircleShape _shape;
+        private DrawablePlate _shape;
         
         // Constructor(s)
         internal Pancake()
@@ -36,10 +37,8 @@ namespace PM2.GameContent.Game.Entities
         internal override void GetContent(ContentManager content)
         {
             // Create pancake circle shape
-            _shape = new BCircleShape(45f, 32);
-            _shape.Position = GetWorld().MainLayer.GetView().Size / 2f;
-            _shape.Origin = new Vector2f(_shape.Radius, _shape.Radius);
-            _shape.FillColor = Color.Yellow;
+            _shape = new DrawablePlate(45f);
+            _shape.Color = Color.Yellow;
 
             // Create pancake circle shape
             _hitbox.FillColor = new Color(Color.Red) { A = 125 };
@@ -82,29 +81,17 @@ namespace PM2.GameContent.Game.Entities
         {
             Vector2f pos = new Vector2f(GetBody().Position.X, GetBody().Position.Y) / new Vector2f(GetWorld().WorldSize.X, GetWorld().WorldSize.Y);
             float rot = GetBody().Rotation % ((float)Math.PI * 2f);
-            if (rot < 0f) rot += (float)Math.PI * 2f;
+            if (rot < 0f)
+                rot += (float)Math.PI * 2f;
 
             View view = GetWorld().MainLayer.GetView();
 
-            // Position
-            _shape.Position = pos * view.Size;
-
-            // Scale pancake
-            float s1 = Math.Abs((pos.Y / 1f) - 0.5f);
-            float s2 =  (float)Math.Abs(Math.Cos(rot));
-            float scale = Math.Min(s1, s2);
-            _shape.Scale = new Vector2f(_shape.Scale.X,
-                Math.Max(scale * 0.45f, 0.03f));
+            //
+            _shape.UpdateOrientation(pos, rot, view.Size);
 
             // Color
             float d = pos.Y / 1f;
-            _shape.FillColor = new Color((byte)(d * 256 / 2 + 256 / 2), (byte)(d * 256 / 2 + 256 / 2), 0);
-
-            // Rotation
-            _shape.Rotation = GetBody().Rotation * (360f / ((float)Math.PI * 2f));
-
-            // Depth
-            _shape.Depth = (int)pos.Y * 10;
+            _shape.Color = new Color((byte)(d * 256 / 2 + 256 / 2), (byte)(d * 256 / 2 + 256 / 2), 0);
 
             // Hitbox
             _hitbox.SetShape(GetBody(), new Vector2(view.Size.X / GetWorld().WorldSize.X, view.Size.Y / GetWorld().WorldSize.Y));
