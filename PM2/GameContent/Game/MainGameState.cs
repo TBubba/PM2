@@ -78,8 +78,8 @@ namespace PM2.GameContent.Game
             //
             _mouse.AddOnPressed(Mouse.Button.Left, new MouseButtonBinding((x, y) =>
             {
-                for (int i = 0; i < 10; i++ )
-                    _game.CreatePancake(new Vector2((float)x / (float)_graphics.RenderWidth, (float)y / (float)_graphics.RenderHeight - 0.1f - (float)i * 0.025f));
+                for (int i = 0; i < 3; i++ )
+                    _game.CreatePancake(new Vector2((float)x / (float)_graphics.RenderWidth, (float)y / (float)_graphics.RenderHeight - 0.1f - (float)i * 0.035f));
             }));
             _mouse.AddOnMoved(new MouseMoveBinding((x, y) =>
             {

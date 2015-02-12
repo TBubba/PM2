@@ -135,7 +135,7 @@ namespace PM2.GameContent.Game.Entities
                 position = _body.Position;
                 velocity = _body.LinearVelocity;
 
-                rotation = (int)_body.Rotation % 359;
+                rotation = (int)(_body.Rotation / (Math.PI * 2f) * 360f) % 359;
                 if (Math.Sign(rotation) == -1) rotation += 360;
 
                 angular = _body.AngularVelocity;
