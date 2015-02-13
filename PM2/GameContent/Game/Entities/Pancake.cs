@@ -71,10 +71,12 @@ namespace PM2.GameContent.Game.Entities
         }
         internal override void OnStep()
         {
-            if (GetBody().Position.Y > GetWorld().WorldSize.Y ||
-                //GetBody().Position.Y < 0f ||
-                GetBody().Position.X > GetWorld().WorldSize.X ||
-                GetBody().Position.X < 0f)
+            float mar = _shape.Radius * 2f;
+
+            if (GetBody().Position.Y > GetWorld().WorldSize.Y + mar ||
+                //GetBody().Position.Y < -mar ||
+                GetBody().Position.X > GetWorld().WorldSize.X + mar ||
+                GetBody().Position.X < -mar)
                 GetWorld().Entities.Remove(this);
         }
         internal override void OnAnimate(float delta)
@@ -109,6 +111,7 @@ namespace PM2.GameContent.Game.Entities
             //body.FixedRotation = true;
 
             body.LinearDamping = 0.4f;
+            body.AngularDamping = 0.1f;
             body.Friction = 0.2f;
 
             return body;
