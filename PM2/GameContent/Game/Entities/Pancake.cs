@@ -22,6 +22,7 @@ namespace PM2.GameContent.Game.Entities
     {
         // Private
         private DrawablePlate _shape;
+        private DrawableIndicator _indicator;
         
         // Constructor(s)
         internal Pancake()
@@ -39,6 +40,11 @@ namespace PM2.GameContent.Game.Entities
             // Create pancake circle shape
             _shape = new DrawablePlate(45f);
             _shape.Color = Color.Yellow;
+
+            //
+            _indicator = new DrawableIndicator();
+            _indicator.Texture = content.GetTexture(@"GameContent\Game\Indicator.png");
+            _indicator.Font = content.GetFont(@"Common\Fonts\WhiteRabbit.ttf");
 
             // Create pancake circle shape
             _hitbox.FillColor = new Color(Color.Red) { A = 125 };

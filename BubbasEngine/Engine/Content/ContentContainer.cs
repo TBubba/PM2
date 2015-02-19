@@ -67,8 +67,13 @@ namespace BubbasEngine.Engine.Content
         // Container
         public T this[string key]
         {
-            get { return _entries[key]; }
-            set
+            get
+            {
+                if (!_entries.ContainsKey(key))
+                    throw new Exception(string.Format("content not found (\"{0}\" : {1})", key, typeof(T).Name));
+                return _entries[key];
+            }
+            internal set
             {
                 if (_entries.ContainsKey(key))
                     Set(key, value);

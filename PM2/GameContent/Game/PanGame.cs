@@ -126,9 +126,11 @@ namespace PM2.GameContent.Game
         {
             //
             const string fontPath = @"Common\Fonts\WhiteRabbit.ttf";
+            const string indicatorPath = @"GameContent\Game\Indicator.png";
 
             //
             _content.RequestFont(fontPath);
+            _content.RequestTexture(indicatorPath);
 
             //
             _debugText.Font = _content.GetFont(fontPath);
@@ -138,7 +140,13 @@ namespace PM2.GameContent.Game
         }
         internal void UnloadContent()
         {
+            //
+            const string fontPath = @"Common\Fonts\WhiteRabbit.ttf";
+            const string indicatorPath = @"GameContent\Game\Indicator.png";
 
+            //
+            _content.DequestFont(fontPath);
+            _content.DequestTexture(indicatorPath);
         }
 
         // Game Loop
