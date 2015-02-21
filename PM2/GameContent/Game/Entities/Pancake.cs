@@ -58,6 +58,7 @@ namespace PM2.GameContent.Game.Entities
         {
             // Add drawables
             gameLayer.Renderables.Add(_shape);
+            gameLayer.Renderables.Add(_indicator);
 
             //
             base.AddDrawables(gameLayer, hitboxLayer);
@@ -66,6 +67,7 @@ namespace PM2.GameContent.Game.Entities
         {
             // Remove drawables
             gameLayer.Renderables.Remove(_shape);
+            gameLayer.Renderables.Remove(_indicator);
 
             //
             base.RemoveDrawables(gameLayer, hitboxLayer);

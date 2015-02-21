@@ -12,6 +12,7 @@ using System.Collections.ObjectModel;
 using BubbasEngine.Engine.Physics.Common;
 using BubbasEngine.Engine.Graphics.Drawables;
 using SFML.Graphics;
+using BubbasEngine.Engine.GameStates;
 
 namespace PM2.GameContent.Game
 {
@@ -122,15 +123,15 @@ namespace PM2.GameContent.Game
         }
 
         // Content
-        internal void LoadContent()
+        internal void LoadContent(GameState state)
         {
             //
             const string fontPath = @"Common\Fonts\WhiteRabbit.ttf";
             const string indicatorPath = @"GameContent\Game\Indicator.png";
 
             //
-            _content.RequestFont(fontPath);
-            _content.RequestTexture(indicatorPath);
+            _content.RequestFont(fontPath, state);
+            _content.RequestTexture(indicatorPath, state);
 
             //
             _debugText.Font = _content.GetFont(fontPath);
@@ -138,15 +139,15 @@ namespace PM2.GameContent.Game
             //
             _world.DebugLayer.Renderables.Add(_debugText);
         }
-        internal void UnloadContent()
+        internal void UnloadContent(GameState state)
         {
             //
             const string fontPath = @"Common\Fonts\WhiteRabbit.ttf";
             const string indicatorPath = @"GameContent\Game\Indicator.png";
 
             //
-            _content.DequestFont(fontPath);
-            _content.DequestTexture(indicatorPath);
+            _content.DequestFont(fontPath, state);
+            _content.DequestTexture(indicatorPath, state);
         }
 
         // Game Loop

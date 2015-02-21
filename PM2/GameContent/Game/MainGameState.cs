@@ -87,7 +87,7 @@ namespace PM2.GameContent.Game
             }));
 
             // Load world content
-            _game.LoadContent();
+            _game.LoadContent(this);
 
             // Apply Keybindings
             _keys.Apply(_input.Keyboard);
@@ -115,7 +115,7 @@ namespace PM2.GameContent.Game
             //content.DEQUSET(this, @"intro\logo.png");
 
             // Unload
-            _game.UnloadContent();
+            _game.UnloadContent(this);
 
             // Remove Keybindings
             _keys.Remove(_input.Keyboard);
