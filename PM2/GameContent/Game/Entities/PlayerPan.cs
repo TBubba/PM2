@@ -37,7 +37,8 @@ namespace PM2.GameContent.Game.Entities
         {
             // Create pan circle shape
             _shape = new DrawablePlate(45f);
-            _shape.Color = Color.Gray;
+            _shape.TopColor = Color.Gray;
+            _shape.BotColor = Color.DarkGray;
 
             // Create pancake circle shape
             _hitbox.FillColor = new Color(Color.Yellow) { A = 125 };
@@ -96,7 +97,7 @@ namespace PM2.GameContent.Game.Entities
 
             // Color
             float d = pos.Y / 1f;
-            _shape.Color = new Color((byte)(d * 256 / 2 + 256 / 2), (byte)(d * 256 / 2 + 256 / 2), (byte)(d * 256 / 2 + 256 / 2));
+            //_shape.TopColor = new Color((byte)(d * 256 / 2 + 256 / 2), (byte)(d * 256 / 2 + 256 / 2), (byte)(d * 256 / 2 + 256 / 2));
 
             // Hitbox
             _hitbox.SetShape(GetBody(), new Vector2(view.Size.X / GetWorld().WorldSize.X, view.Size.Y / GetWorld().WorldSize.Y));
@@ -148,6 +149,17 @@ namespace PM2.GameContent.Game.Entities
 
             // Set "Step timer"
             _stepsToTarget = 2;
+        }
+
+        //
+        public override string ToString()
+        {
+            //
+            int depth = (_shape != null) ? _shape.GetDepth() : 0;
+
+            //
+            return base.ToString() +
+                string.Format(" Depth({0,3})", depth);
         }
     }
 }

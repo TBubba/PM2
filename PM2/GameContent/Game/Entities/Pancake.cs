@@ -23,23 +23,28 @@ namespace PM2.GameContent.Game.Entities
         // Private
         private DrawablePlate _shape;
         private DrawableIndicator _indicator;
+
+        private float _width;
         
         // Constructor(s)
-        internal Pancake()
+        internal Pancake(float width)
             : base()
         {
+            _width = width;
         }
-        internal Pancake(BodyData data)
+        internal Pancake(BodyData data, float width)
             : base(data)
         {
+            _width = width;
         }
 
         // Content & Graphics
         internal override void GetContent(ContentManager content)
         {
             // Create pancake circle shape
-            _shape = new DrawablePlate(45f);
-            _shape.Color = Color.Yellow;
+            _shape = new DrawablePlate(45f * _width);
+            _shape.TopColor = new Color(236, 162, 77);
+            _shape.BotColor = new Color(255, 242, 164);
 
             //
             _indicator = new DrawableIndicator();
@@ -98,10 +103,11 @@ namespace PM2.GameContent.Game.Entities
 
             //
             _shape.UpdateOrientation(pos, rot, view.Size);
+            _indicator.UpdateOrientation(pos, view.Size);
 
             // Color
             float d = pos.Y / 1f;
-            _shape.Color = new Color((byte)(d * 256 / 2 + 256 / 2), (byte)(d * 256 / 2 + 256 / 2), 0);
+            //_shape.TopColor = new Color((byte)(d * 256 / 2 + 256 / 2), (byte)(d * 256 / 2 + 256 / 2), 0);
 
             // Hitbox
             _hitbox.SetShape(GetBody(), new Vector2(view.Size.X / GetWorld().WorldSize.X, view.Size.Y / GetWorld().WorldSize.Y));
@@ -113,7 +119,7 @@ namespace PM2.GameContent.Game.Entities
         //
         internal override Body CreateBody(PhysicsWorld world, BodyData data)
         {
-            Body body = BodyFactory.CreateRectangle(world, 7f, 0.1f, 1f, data.Position);
+            Body body = BodyFactory.CreateRectangle(world, 7f * _width, 0.1f, 1f, data.Position);
             body.IsStatic = false;
             body.IsKinematic = false;
             //body.FixedRotation = true;
@@ -123,6 +129,19 @@ namespace PM2.GameContent.Game.Entities
             body.Friction = 0.2f;
 
             return body;
+        }
+        
+        //
+        public override string ToString()
+        {
+            //
+            bool upsideDown = (_shape != null) ? _shape.IsUpsideDown : false;
+            int depth = (_shape != null) ? _shape.GetDepth() : 0;
+
+            //
+            return base.ToString() +
+                string.Format(" Depth({0,3})", depth) +
+                string.Format(" Flip({0})", upsideDown ? "T" : "F");
         }
     }
 }

@@ -14,13 +14,24 @@ namespace PM2.GameContent.Game.Drawables
         //
         private BCircleShape _shape;
 
+        private Color _topColor;
+        private Color _botColor;
+
+        private bool _isUpsideDown;
+
         //
-        internal Color Color
-        { get { return _shape.FillColor; } set { _shape.FillColor = value; } }
         internal Vector2f Position
         { get { return _shape.Position; } }
         internal float Radius
         { get { return _shape.Radius; } set { _shape.Radius = value; UpdateOrigin(); } }
+
+        internal Color TopColor
+        { get { return _topColor; } set { _topColor = value; } }
+        internal Color BotColor
+        { get { return _botColor; } set { _botColor = value; } }
+
+        internal bool IsUpsideDown
+        { get { return _isUpsideDown; } set { _isUpsideDown = value; } }
 
         // Constructor(s)
         internal DrawablePlate()
@@ -48,6 +59,42 @@ namespace PM2.GameContent.Game.Drawables
             // Position
             _shape.Position = position * viewSize;
 
+            // Is Upside Down (?)
+            bool flipped = false; // If it is flipped by rotation
+            bool aboveCenter = false; // If the bottom is visable due to the camera angle
+
+            if (rotation >= (float)Math.PI * 0.5f
+             && rotation <= (float)Math.PI * 1.5f)
+                flipped = true;
+
+            if (position.Y <= 0.5f)
+                aboveCenter = true;
+
+            _isUpsideDown = flipped;
+            if (aboveCenter)
+                _isUpsideDown = !flipped;
+
+            // Color
+            Color curColor;
+
+            if (_isUpsideDown)
+                curColor = _botColor;
+            else
+                curColor = _topColor;
+
+            const float blendDist = 0.02f;
+            if (Math.Abs(position.Y - 0.5f) <= blendDist)
+            {
+                float force = (position.Y - 0.5f + blendDist / 2f) / blendDist;
+
+                if (flipped)
+                    curColor = Color.Blend(_botColor, _topColor, force);
+                else
+                    curColor = Color.Blend(_topColor, _botColor, force);
+            }
+
+            _shape.FillColor = curColor;
+
             // Scale
             float s1 = Math.Abs((position.Y / 1f) - 0.5f); // Scale relative to view
             float s2 = (float)Math.Abs(Math.Cos(rotation)); // Scale relative to rotation
@@ -59,7 +106,7 @@ namespace PM2.GameContent.Game.Drawables
             _shape.Rotation = rotation * (360f / ((float)Math.PI * 2f));
 
             // Depth
-            _shape.Depth = (int)(position.Y * Settings.DepthMultiplier);
+            _shape.Depth = (int)(Math.Abs(position.Y - 0.5f) * Settings.DepthMultiplier);
         }
 
         // Depth

@@ -324,22 +324,19 @@ namespace BubbasEngine.Engine.Input.Devices.Mouses
                 MouseMoveBinding bind = _onMoved[i];
 
                 if (bind != null)
-                {
-                    _update += delegate
-                    {
-                        // Call the method
-                        bind.CallMethod(e.X, e.Y);
-
-                        // Keep current position as old
-                        _oldX = _x;
-                        _oldY = _y;
-
-                        // Keep new position as current
-                        _x = e.X;
-                        _y = e.Y;
-                    };
-                }
+                    _update += delegate { bind.CallMethod(e.X, e.Y); };
             }
+
+            _update += delegate
+                {
+                    // Keep current position as old
+                    _oldX = _x;
+                    _oldY = _y;
+
+                    // Keep new position as current
+                    _x = e.X;
+                    _y = e.Y;
+                };
 
             //GameConsole.WriteLine(string.Format("InputMouse: Moved mouse to {0};{1}", e.X, e.Y)); // Debug
         }

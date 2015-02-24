@@ -106,7 +106,8 @@ namespace PM2.GameContent.Game
         // Create
         internal void CreatePancake(Vector2 position)
         {
-            Pancake p = new Pancake(new BodyData() { Position = position * _world.WorldSize });
+            Pancake p = new Pancake(new BodyData() { Position = position * _world.WorldSize }, 
+                                    1.0f - (float)_random.NextDouble() * 0.25f);
 
             _world.Entities.Add(p);
         }
