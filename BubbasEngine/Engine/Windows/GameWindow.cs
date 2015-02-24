@@ -168,6 +168,9 @@ namespace BubbasEngine.Engine.Windows
         public Vector2u Size
         { get { return _window.Size; } }
 
+        public string Title
+        { get { return _window.Title; } set { _window.SetTitle(value); } }
+
         // Constructor(s)
         internal GameWindow(GameWindowArgs args)
         {
@@ -175,7 +178,9 @@ namespace BubbasEngine.Engine.Windows
             if (args.CreateWindow)
             {
                 // Create window
-                _window = new ExposedWindow(new VideoMode(args.WindowWidth, args.WindowHeight), "Game", Styles.Default);
+                _window = new ExposedWindow(new VideoMode(args.WindowWidth, args.WindowHeight), 
+                                            args.WindowTitle,
+                                            args.WindowStyle);
                 _window.SetFocus();
 
                 // Focus on click
@@ -196,7 +201,7 @@ namespace BubbasEngine.Engine.Windows
 
             // Set window settings
             _window.SetVerticalSyncEnabled(false);
-            _window.SetFramerateLimit(0);
+            _window.SetFramerateLimit(0u);
             _window.SetActive(true);
 
             // Set up EventHandlers

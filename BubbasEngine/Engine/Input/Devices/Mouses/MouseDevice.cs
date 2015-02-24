@@ -33,6 +33,17 @@ namespace BubbasEngine.Engine.Input.Devices.Mouses
 
         private GameWindow _window;
 
+        // Public
+        public int X
+        { get { return _x; } }
+        public int Y
+        { get { return _y; } }
+
+        public int OldX
+        { get { return _oldX; } }
+        public int OldY
+        { get { return _oldY; } }
+
         // Constructor(s)
         internal MouseDevice()
         {

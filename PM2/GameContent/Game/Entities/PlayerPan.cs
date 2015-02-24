@@ -42,7 +42,7 @@ namespace PM2.GameContent.Game.Entities
 
             // Create pancake circle shape
             _hitbox.FillColor = new Color(Color.Yellow) { A = 125 };
-            _hitbox.Depth = -100;
+            _hitbox.Depth = -1000;
         }
         internal override void RemoveContent(ContentManager content)
         {

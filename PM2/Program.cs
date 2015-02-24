@@ -17,6 +17,8 @@ namespace PM2
 
             // Temporary testing values
             const float resScale = 1f;
+            const uint winWidth = 1280u;
+            const uint winHeight = 720u;
 
             //
             GameArgs gameArgs = new GameArgs()
@@ -40,8 +42,8 @@ namespace PM2
                 },
                 Graphics = new BubbasEngine.Engine.Graphics.GraphicsRendererArgs() // Graphics
                 {
-                    ResolutionWidth = (int)(1280f * resScale),
-                    ResolutionHeight = (int)(720f * resScale)
+                    ResolutionWidth = (int)((float)winWidth * resScale),
+                    ResolutionHeight = (int)((float)winHeight * resScale)
                 },
                 Time = new BubbasEngine.Engine.Timing.TimeManagerArgs() // Time
                 {
@@ -50,8 +52,10 @@ namespace PM2
                 Window = new BubbasEngine.Engine.Windows.GameWindowArgs() // Window
                 {
                     CreateWindow = true,
-                    WindowWidth = 1280,
-                    WindowHeight = 720
+                    WindowWidth = winWidth,
+                    WindowHeight = winHeight,
+                    WindowTitle = "PannkaksMästarN 2: The Revenge of SmetMästarN",
+                    WindowStyle = SFML.Window.Styles.Close
                 }
             };
 

@@ -25,6 +25,9 @@ namespace PM2.GameContent.Game.Entities
         private DrawableIndicator _indicator;
 
         private float _width;
+
+        private float _cookedTop;
+        private float _cookedBot;
         
         // Constructor(s)
         internal Pancake(float width)
@@ -53,7 +56,7 @@ namespace PM2.GameContent.Game.Entities
 
             // Create pancake circle shape
             _hitbox.FillColor = new Color(Color.Red) { A = 125 };
-            _hitbox.Depth = -100;
+            _hitbox.Depth = -1000;
         }
         internal override void RemoveContent(ContentManager content)
         {
