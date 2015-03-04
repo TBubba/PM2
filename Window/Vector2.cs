@@ -31,6 +31,18 @@ namespace SFML
 
             ////////////////////////////////////////////////////////////
             /// <summary>
+            /// Construct the vector from its coordinates
+            /// </summary>
+            /// <param name="c">Value of both coordinates</param>
+            ////////////////////////////////////////////////////////////
+            public Vector2f(float c)
+            {
+                X = c;
+                Y = c;
+            }
+
+            ////////////////////////////////////////////////////////////
+            /// <summary>
             /// Construct the vector from another vectors coordinates
             /// </summary>
             /// <param name="vec">Vector coordinates</param>
@@ -198,6 +210,18 @@ namespace SFML
             
             ////////////////////////////////////////////////////////////
             /// <summary>
+            /// Construct the vector from its coordinates
+            /// </summary>
+            /// <param name="c">Value of both coordinates</param>
+            ////////////////////////////////////////////////////////////
+            public Vector2i(int c)
+            {
+                X = c;
+                Y = c;
+            }
+            
+            ////////////////////////////////////////////////////////////
+            /// <summary>
             /// Construct the vector from another vectors coordinates
             /// </summary>
             /// <param name="vec">Vector coordinates</param>
@@ -351,6 +375,18 @@ namespace SFML
                 Y = y;
             }
             
+            ////////////////////////////////////////////////////////////
+            /// <summary>
+            /// Construct the vector from its coordinates
+            /// </summary>
+            /// <param name="c">Value of both coordinates</param>
+            ////////////////////////////////////////////////////////////
+            public Vector2u(uint c)
+            {
+                X = c;
+                Y = c;
+            }
+
             ////////////////////////////////////////////////////////////
             /// <summary>
             /// Construct the vector from another vectors coordinates

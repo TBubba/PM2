@@ -32,10 +32,10 @@ namespace SFML
                       c2B = (float)c2.B / 255f;
 
                 // Caluclate
-                a = c1A * force + c2A * (1f - force);
-                r = c1R * force + c2R * (1f - force);
-                g = c1G * force + c2G * (1f - force);
-                b = c1B * force + c2B * (1f - force);
+                a = c1A + (c2A - c1A) * (1f - force);
+                r = c1R + (c2R - c1R) * (1f - force);
+                g = c1G + (c2G - c1G) * (1f - force);
+                b = c1B + (c2B - c1B) * (1f - force);
 
                 // Return
                 return new Color((byte)(255f * r),

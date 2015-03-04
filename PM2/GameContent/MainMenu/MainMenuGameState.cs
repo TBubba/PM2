@@ -8,27 +8,115 @@ using BubbasEngine.Engine.Input.Devices.Keyboards;
 using SFML.Window;
 using SFML.Graphics;
 using BubbasEngine.Engine;
+using PM2.Common;
+using BubbasEngine.Engine.Input.Devices.Mouses;
 
 namespace PM2.GameContent.MainMenu
 {
     internal class MainMenuGameState : GameState
     {
-        private BSprite _logo;
+        //
+        private KeyboardBindingCollection _keys;
+        private MouseBindingCollection _mouse;
+
+        private bool _pushCurrent;
+        private bool _moveUp;
+        private bool _moveDown;
+
+        private GenericMenu _menu;
 
         private float _time;
 
-        private KeyboardBindingCollection _keys;
-
-        //
+        // Constructor(s)
         internal MainMenuGameState()
         {
-            //
+            // Create menu with items (buttons)
+            _menu = new GenericMenu(new MainMenuButton[] {
+                new MainMenuButton("Singleplayer", delegate
+                    {
+                        BubbasEngine.Engine.GameConsole.WriteLine("You clicked on Singleplayer");
+                        _states.RemoveState(this);
+                        _states.AddState(new PM2.GameContent.Game.MainGameState());
+                    }),
+                new MainMenuButton("Multiplayer", delegate
+                    {
+                        /* Multiplayer */
+                        BubbasEngine.Engine.GameConsole.WriteLine("You clicked on Multiplayer");
+                    }),
+                new MainMenuButton("Settings", delegate
+                    {
+                        /* Settings */
+                        BubbasEngine.Engine.GameConsole.WriteLine("You clicked on Settings");
+                    }),
+                new MainMenuButton("Exit", delegate
+                    {
+                        BubbasEngine.Engine.GameConsole.WriteLine("You clicked on Exit");
+                        _engine.End();
+                    })
+                });
+
+            // Set up keybindings
             _keys = new KeyboardBindingCollection();
             _keys.AddOnPressed(Keyboard.Key.Space,
                 new KeyboardBinding(new KeyboardInputDele(delegate
-                    {
+                {
+                    _pushCurrent = true;
+                })));
 
-                    })));
+            _keys.AddOnPressed(Keyboard.Key.Up,
+                new KeyboardBinding(new KeyboardInputDele(delegate
+                {
+                    _moveUp = true;
+                })));
+            _keys.AddOnPressed(Keyboard.Key.W,
+                new KeyboardBinding(new KeyboardInputDele(delegate
+                {
+                    _moveUp = true;
+                })));
+
+            _keys.AddOnPressed(Keyboard.Key.Down,
+                new KeyboardBinding(new KeyboardInputDele(delegate
+                {
+                    _moveDown = true;
+                })));
+            _keys.AddOnPressed(Keyboard.Key.S,
+                new KeyboardBinding(new KeyboardInputDele(delegate
+                {
+                    _moveDown = true;
+                })));
+
+            // Set up mouse-interaction
+            _mouse = new MouseBindingCollection();
+            _mouse.AddOnPressed(Mouse.Button.Left, new MouseButtonBinding((x, y) =>
+            {
+                int rx = (int)((float)x / _graphics.Scale.X);
+                int ry = (int)((float)y / _graphics.Scale.Y);
+
+                int length = _menu.Length;
+                for (int i = 0; i < length; i++)
+                {
+                    MainMenuButton button = (MainMenuButton)_menu.GetItem(i);
+                    if (button.Contains(rx, ry))
+                    {
+                        _menu.Select(i);
+                        _menu.PushSelected();
+                        break;
+                    }
+                }
+            }));
+            _mouse.AddOnMoved(new MouseMoveBinding((x, y) =>
+            {
+                int length = _menu.Length;
+                for (int i = 0; i < length; i++)
+                {
+                    MainMenuButton button = (MainMenuButton)_menu.GetItem(i);
+                    if (button.Contains(x, y))
+                    {
+                        _menu.Select(i);
+                        break;
+                    }
+                }
+            }));
         }
 
         //
@@ -40,36 +128,53 @@ namespace PM2.GameContent.MainMenu
         public override void LoadContent()
         {
             // Define content paths
-            const string logoPath = @"GameContent\Intro\Logo.png";
+            const string outlineShaderPath = @"Common\Shaders\Outline";
+            const string buttonTexturePath = @"GameContent\Menu\Button.png";
+            const string buttonFontPath = @"Common\Fonts\Anklada.ttf";
+            const string titleTexturePath = @"GameContent\Menu\Title.png";
 
-            // Request content
-            _content.RequestTexture(logoPath, this);
-
-            // Define positioning
-            float halfWidth = (float)(_graphics.RenderWidth / 2u);
-            float halfHeight = (float)(_graphics.RenderHeight / 2u);
+            // Requst content
+            _content.RequestShader(outlineShaderPath + ".vert", outlineShaderPath + ".frag", this);
+            _content.RequestTexture(buttonTexturePath, this);
+            _content.RequestFont(buttonFontPath, this);
+            _content.RequestTexture(titleTexturePath, this);
 
             // Load content
-            Texture logoTexture = _content.GetTexture(logoPath);
+            Texture buttonTexture = _content.GetTexture(buttonTexturePath);
+            Font buttonFont = _content.GetFont(buttonFontPath);
 
-            // Set up graphics
-            _logo = new BSprite(logoTexture);
-            _logo.Position = new Vector2f(halfWidth, halfHeight);
-            _logo.Origin = new Vector2f(logoTexture.Size / 2u);
-            _layer.Renderables.Add(_logo);
+            Texture titleTexture = _content.GetTexture(titleTexturePath);
+
+            // Create drawables for the menu items
+            int length = _menu.Length;
+            for (int i = 0; i < length; i++)
+            {
+                // Get resources
+                Shader shader = _content.GetShader(outlineShaderPath + ".vert", outlineShaderPath + ".frag");
+
+                // Create
+                MainMenuButton button = ((MainMenuButton)_menu.GetItem(i));
+
+                Vector2f position = new Vector2f(
+                    (float)(_graphics.RenderWidth / 2u),
+                    (float)((_graphics.RenderHeight / (length + 3)) * (i + 3)));
+
+                button.SetDrawable(position, buttonTexture, shader, buttonFont);
+
+                // Add drawable
+                button.AddDrawables(_layer);
+            }
+
+            // Select menu item
+            _menu.Select(0);
 
             // Apply Keybindings
             _keys.Apply(_input.Keyboard);
+            _mouse.Apply(_input.Mouse);
         }
 
         public override void BeginFrame()
         {
-            if (_time > 0.5f)
-            {
-                // Go to main game
-                _states.RemoveState(this);
-                _states.AddState(new Game.MainGameState());
-            }
         }
 
         public override void Step()
@@ -78,8 +183,6 @@ namespace PM2.GameContent.MainMenu
 
         public override void Animate(float delta)
         {
-            // Update time                                           
-            _time += delta / 1000f;
         }
 
         public override void UnloadContent()
@@ -89,10 +192,18 @@ namespace PM2.GameContent.MainMenu
             //content.DEQUSET(this, @"intro\logo.png");
 
             // Remove graphics
-            _layer.Renderables.Remove(_logo);
+            //_layer.Renderables.Remove(_logo);
+
+            //
+            int length = _menu.Length;
+            for (int i = 0; i < length; i++)
+            {
+                ((MainMenuButton)_menu.GetItem(i)).RemoveDrawables(_layer);
+            }
 
             // Remove Keybindings
             _keys.Remove(_input.Keyboard);
+            _mouse.Remove(_input.Mouse);
         }
     }
 }

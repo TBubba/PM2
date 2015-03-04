@@ -187,7 +187,7 @@ namespace BubbasEngine.Engine.Content
                 if (_safeLoading)
                     shader = SafeLoadShader(fragPath, vertPath);
                 else
-                    shader = LoadShader(fragPath, vertPath);
+                    shader = LoadShader(vertPath, fragPath);
 
                 // Add
                 _shaders[vertPath][fragPath] = shader;
