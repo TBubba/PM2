@@ -135,7 +135,9 @@ namespace PM2.GameContent.Game.Entities
             body.IgnoreGravity = true;
             body.IsKinematic = true;
             body.FixedRotation = true;
-            body.Friction = 1f;
+            //body.JointList.
+            
+            //body.Friction = 1f;
 
             return body;
         }

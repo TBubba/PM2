@@ -58,6 +58,11 @@ namespace PM2.GameContent.Game.Drawables
             float dist = Math.Abs(position.Y) * 10f;
             _number.Text = string.Format("{0:000.}", dist);
 
+            // Color
+            _arrow.Color = Color.Blend(new Color((byte)0, (byte)255, (byte)0),
+                                                 Color.Black,
+                                                 dist / 100f);
+
             // Depth
             _depth = (int)(-dist * 10f);
         }
@@ -77,7 +82,7 @@ namespace PM2.GameContent.Game.Drawables
 
             // Draw
             _arrow.Draw(target);
-            _number.Draw(target);
+            //_number.Draw(target);
         }
     }
 }
