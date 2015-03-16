@@ -106,15 +106,45 @@ namespace PM2.GameContent.Game
         // Create
         internal void CreatePancake(Vector2 position)
         {
-            Pancake p = new Pancake(new BodyData() { Position = position * _world.WorldSize }, 
+            Pancake p = new Pancake(new BodyData() { Position = position * _world.WorldSize },
                                     1.0f - (float)_random.NextDouble() * 0.25f);
 
             _world.Entities.Add(p);
+        }
+        internal void CreateBatter(Vector2 position)
+        {
+            Batter b = new Batter(new BodyData() { Position = position * _world.WorldSize },
+                                  1.0f - (float)_random.NextDouble() * 0.25f);
+
+            _world.Entities.Add(b);
         }
 
         internal void SpawnPancake()
         {
 
+        }
+
+        internal void SpawnBatter()
+        {
+            //
+            Vector2 scale = _world.WorldSize;
+
+            // Randomize side
+            int side = -1;
+            if (_random.Next(1) == 1)
+                side = 1;
+
+            // Create batter
+            int length = 10 + _random.Next(5);
+            for (int i = 0; i < length; i++)
+            {
+                // Create batter
+                Batter b = new Batter(new BodyData() { Position = ( new Vector2(0.01f, 0f)) * scale * side ,
+                                                       Velocity = new Vector2(0.05f * -side, 0.02f) * scale },
+                                      1.0f - (float)_random.NextDouble() * 0.25f);
+
+                _world.Entities.Add(b);
+            }
         }
 
         // Player

@@ -67,6 +67,7 @@
     <Compile Include="GameContent\Game\Drawables\DrawableIndicator.cs" />
     <Compile Include="GameContent\Game\Drawables\DrawablePlate.cs" />
     <Compile Include="GameContent\Game\Entities\BaseEntity.cs" />
+    <Compile Include="GameContent\Game\Entities\Batter.cs" />
     <Compile Include="GameContent\Game\Entities\BodyData.cs" />
     <Compile Include="GameContent\Game\Entities\Pancake.cs" />
     <Compile Include="GameContent\Game\Entities\PlayerPan.cs" />
@@ -74,6 +75,7 @@
     <Compile Include="GameContent\Game\MainGameState.cs" />
     <Compile Include="GameContent\Game\PanGameArgs.cs" />
     <Compile Include="GameContent\Game\PanWorld.cs" />
+    <Compile Include="GameContent\Game\Vecotr2.cs" />
     <Compile Include="GameContent\Game\WorldCamera.cs" />
     <Compile Include="GameContent\LaunchGameState.cs" />
     <Compile Include="GameContent\MainMenu\MainMenuButton.cs" />

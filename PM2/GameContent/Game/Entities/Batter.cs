@@ -2,57 +2,46 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using BubbasEngine.Engine.GameWorlds;
-using BubbasEngine.Engine.GameWorlds.GameInterfaces;
-using BubbasEngine.Engine.Physics.Common;
-using BubbasEngine.Engine.Graphics.Drawables;
 using BubbasEngine.Engine.Content;
 using BubbasEngine.Engine.Graphics;
 using BubbasEngine.Engine.Graphics.Drawables.Shapes;
 using SFML.Graphics;
 using SFML.Window;
-using BubbasEngine.Engine.Physics.Factories;
+using BubbasEngine.Engine.Physics.Common;
 using BubbasEngine.Engine.Physics.Dynamics;
+using BubbasEngine.Engine.Physics.Factories;
 using BubbasEngine.Engine;
-using PM2.GameContent.Game.Drawables;
 
 namespace PM2.GameContent.Game.Entities
 {
-    internal class Pancake : BaseEntity
+    internal class Batter : BaseEntity
     {
         // Private
-        private DrawablePlate _shape;
-        private DrawableIndicator _indicator;
+        private BCircleShape _shape;
 
-        private float _width;
+        private float _radius;
 
-        private float _cookedTop;
-        private float _cookedBot;
-        
         // Constructor(s)
-        internal Pancake(float width)
+        internal Batter(float radius)
             : base()
         {
-            _width = width;
+            _radius = radius;
         }
-        internal Pancake(BodyData data, float width)
+        internal Batter(BodyData data, float radius)
             : base(data)
         {
-            _width = width;
+            _radius = radius;
         }
+
 
         // Content & Graphics
         internal override void GetContent(ContentManager content)
         {
             // Create pancake circle shape
-            _shape = new DrawablePlate(45f * _width);
-            _shape.TopColor = new Color(236, 162, 77);
-            _shape.BotColor = new Color(255, 242, 164);
-
-            //
-            _indicator = new DrawableIndicator();
-            _indicator.Texture = content.GetTexture(@"GameContent\Game\Indicator.png");
-            _indicator.Font = content.GetFont(@"Common\Fonts\WhiteRabbit.ttf");
+            const float scale = 6f;
+            _shape = new BCircleShape(scale * _radius);
+            _shape.FillColor = new Color(236, 162, 77);
+            _shape.Origin = new Vector2f(_radius * scale);
 
             // Create pancake circle shape
             _hitbox.FillColor = new Color(Color.Red) { A = 125 };
@@ -66,7 +55,6 @@ namespace PM2.GameContent.Game.Entities
         {
             // Add drawables
             gameLayer.Renderables.Add(_shape);
-            gameLayer.Renderables.Add(_indicator);
 
             //
             base.AddDrawables(gameLayer, hitboxLayer);
@@ -75,7 +63,6 @@ namespace PM2.GameContent.Game.Entities
         {
             // Remove drawables
             gameLayer.Renderables.Remove(_shape);
-            gameLayer.Renderables.Remove(_indicator);
 
             //
             base.RemoveDrawables(gameLayer, hitboxLayer);
@@ -93,7 +80,7 @@ namespace PM2.GameContent.Game.Entities
                 //GetBody().Position.Y < -mar ||
                 GetBody().Position.X > GetWorld().WorldSize.X + mar ||
                 GetBody().Position.X < -mar)
-                GetWorld().Entities.Remove(this);
+            { }// GetWorld().Entities.Remove(this);
         }
         internal override void OnAnimate(float delta)
         {
@@ -105,8 +92,8 @@ namespace PM2.GameContent.Game.Entities
             View view = GetWorld().MainLayer.GetView();
 
             //
-            _shape.UpdateOrientation(pos, rot, view.Size);
-            _indicator.UpdateOrientation(pos, view.Size);
+            _shape.Position = pos * view.Size;
+            _shape.Rotation = (rot / (float)Math.PI * 2f) * 360f;
 
             // Color
             float d = pos.Y / 1f;
@@ -122,7 +109,7 @@ namespace PM2.GameContent.Game.Entities
         //
         internal override Body CreateBody(PhysicsWorld world, BodyData data)
         {
-            Body body = BodyFactory.CreateRectangle(world, 7f * _width, 0.1f, 1f, data.Position);
+            Body body = BodyFactory.CreateCircle(world, 0.15f * _radius, 1f, data.Position);
             body.IsStatic = false;
             body.IsKinematic = false;
             //body.FixedRotation = true;
@@ -133,18 +120,16 @@ namespace PM2.GameContent.Game.Entities
 
             return body;
         }
-        
+
         // ToString
         public override string ToString()
         {
             //
-            bool upsideDown = (_shape != null) ? _shape.IsUpsideDown : false;
             int depth = (_shape != null) ? _shape.GetDepth() : 0;
 
             //
             return base.ToString() +
-                string.Format(" Depth({0,3})", depth) +
-                string.Format(" Flip({0})", upsideDown ? "T" : "F");
+                string.Format(" Depth({0,3})", depth);
         }
     }
 }

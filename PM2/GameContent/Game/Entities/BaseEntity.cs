@@ -78,7 +78,14 @@ namespace PM2.GameContent.Game.Entities
         }
         public Body AddBody(PhysicsWorld world)
         {
+            // Create body
             _body = CreateBody(world, _bodyData);
+            
+            // Apply start-velocity
+            if (_bodyData.Velocity != Vector2.Zero)
+                _body.ApplyLinearImpulse(_bodyData.Velocity);
+
+            // Return body
             return _body;
         }
         public void Step()
