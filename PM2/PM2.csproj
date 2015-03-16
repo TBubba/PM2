@@ -75,7 +75,6 @@
     <Compile Include="GameContent\Game\MainGameState.cs" />
     <Compile Include="GameContent\Game\PanGameArgs.cs" />
     <Compile Include="GameContent\Game\PanWorld.cs" />
-    <Compile Include="GameContent\Game\Vecotr2.cs" />
     <Compile Include="GameContent\Game\WorldCamera.cs" />
     <Compile Include="GameContent\LaunchGameState.cs" />
     <Compile Include="GameContent\MainMenu\MainMenuButton.cs" />
