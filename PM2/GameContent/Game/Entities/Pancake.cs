@@ -122,7 +122,7 @@ namespace PM2.GameContent.Game.Entities
         //
         internal override Body CreateBody(PhysicsWorld world, BodyData data)
         {
-            Body body = BodyFactory.CreateRectangle(world, 7f * _width, 0.1f, 1f, data.Position);
+            Body body = BodyFactory.CreateRectangle(world, 7f * _width, 0.1f, 1f, data.StartPosition);
             body.IsStatic = false;
             body.IsKinematic = false;
             //body.FixedRotation = true;

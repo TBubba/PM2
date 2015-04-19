@@ -106,7 +106,7 @@ namespace BubbasEngine.Engine.Graphics
         }
 
         // Public methods
-        public void SetRenderSize(int width, int height) // Rename this bcus it has the same name as the internal function (whitch has a different purpose)
+        public void SetRenderSize(int width, int height) // Rename this bcus it has the same name as the internal function (which has a different purpose)
         {
             SetRenderSize((uint)width, (uint)height);
         }

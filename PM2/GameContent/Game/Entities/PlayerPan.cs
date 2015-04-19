@@ -12,6 +12,7 @@ using BubbasEngine.Engine.Physics.Dynamics;
 using BubbasEngine.Engine.Physics.Factories;
 using BubbasEngine.Engine.Physics.Collision.Shapes;
 using PM2.GameContent.Game.Drawables;
+using BubbasEngine.Engine.Physics.Dynamics.Contacts;
 
 namespace PM2.GameContent.Game.Entities
 {
@@ -106,19 +107,51 @@ namespace PM2.GameContent.Game.Entities
         {
         }
 
+        private void AfterCollision(Fixture fixtureA, Fixture fixtureB, Contact contact, ContactVelocityConstraint impulse)
+        {
+            // Get others body
+            Body other = fixtureB.Body;
+
+            // Abort if the other has no body
+            if (other == null)
+                return;
+
+            // Abort if the other does not have any body data
+            if (other.UserData.GetType() != typeof(BodyData))
+                return;
+            BodyData data = (BodyData)other.UserData;
+
+            // Abort if other does not have an entity (not sure why this would happen - error message instead?)
+            //if (data.Entity == null)
+            //    return;
+
+            // 
+            Type type = data.Entity.GetType();
+            if (type == typeof(Batter))
+            {
+
+            }
+            else if (type == typeof(Batter))
+            {
+
+            }
+        }
+
         //
         internal override Body CreateBody(PhysicsWorld world, BodyData data)
         {
-            //
+            // Pan size
             const float width = 7f;
             const float height = 0.2f;
             const float botHeight = 0.2f;
             const float wallWidth = 0.2f;
 
-            //
-            Body body = new Body(world, data.Position, data.Rotation);
+            const float sensHeight = 0.1f;
 
-            Vertices botVerts = PolygonTools.CreateRectangle(width / 2, botHeight / 2);
+            // Create pan body
+            Body body = new Body(world, data.StartPosition, data.StartRotation);
+
+            Vertices botVerts = PolygonTools.CreateRectangle(width / 2f, botHeight / 2f);
             PolygonShape botShape = new PolygonShape(botVerts, 1f);
             body.CreateFixture(botShape);
 
@@ -135,9 +168,15 @@ namespace PM2.GameContent.Game.Entities
             body.IgnoreGravity = true;
             body.IsKinematic = true;
             body.FixedRotation = true;
-            //body.JointList.
-            
             //body.Friction = 1f;
+
+            // Create pan sensor (for checking if anything is on top of it)
+            Vertices senVerts = PolygonTools.CreateRectangle(width / 2f, sensHeight / 2f);
+            senVerts.Translate(new Vector2((sensHeight - botHeight) / 2f, 0f));
+            PolygonShape senShape = new PolygonShape(botVerts, 1f);
+            body.CreateFixture(botShape);
+
+            body.FixtureList[body.FixtureList.Count - 1].IsSensor = true; // Set sensor as sensor
 
             return body;
         }

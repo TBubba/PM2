@@ -47,7 +47,7 @@ namespace BubbasEngine.Engine
         // Constructor(s)
         public GameEngine(GameArgs args)
         {
-            // Copy arguments
+            // Copy arguments (to avoid outside editing of the arguments)
             _args = new GameArgs(args);
 
             // Console
@@ -80,10 +80,17 @@ namespace BubbasEngine.Engine
                 _states.AddState(new Debugging.DebugGameState(args.Debug));
         }
 
-        //
+        /// <summary>
+        /// Starts the engine
+        /// </summary>
+        /// <param name="state">The state the engine will start running with. (Start-up state)</param>
         public void Run(GameState state)
         {
-            // Mark the game as running
+            // Throw exception if the game (engine) is already running (not sure if possible)
+            if (_isRunning)
+                throw new Exception("Engine is already running.");
+
+            // Mark the game (engine) as running
             _isRunning = true;
 
             // Add the starup state
@@ -104,6 +111,7 @@ namespace BubbasEngine.Engine
 
         public void End()
         {
+            // Mark the game (engine) as running
             _isRunning = false;
         }
 

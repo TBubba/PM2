@@ -82,8 +82,8 @@ namespace PM2.GameContent.Game.Entities
             _body = CreateBody(world, _bodyData);
             
             // Apply start-velocity
-            if (_bodyData.Velocity != Vector2.Zero)
-                _body.ApplyLinearImpulse(_bodyData.Velocity);
+            if (_bodyData.StartVelocity != Vector2.Zero)
+                _body.ApplyLinearImpulse(_bodyData.StartVelocity);
 
             // Return body
             return _body;
@@ -111,7 +111,7 @@ namespace PM2.GameContent.Game.Entities
         }
         internal virtual Body CreateBody(PhysicsWorld world, BodyData data)
         {
-            return new Body(world, data.Position, data.Rotation);
+            return new Body(world, data.StartPosition, data.StartRotation, data);
         }
 
         //

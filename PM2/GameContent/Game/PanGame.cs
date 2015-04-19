@@ -86,7 +86,7 @@ namespace PM2.GameContent.Game
             int length = _args.Players;
             for (int i = 0; i < length; i++)
             {
-                PlayerPan player = new PlayerPan(new BodyData() { Position = new Vector2(.5f, .5f) * _world.WorldSize });
+                PlayerPan player = new PlayerPan(new BodyData() { StartPosition = new Vector2(.5f, .5f) * _world.WorldSize });
 
                 _players[i] = player;
                 _world.Entities.Add(player);
@@ -106,14 +106,14 @@ namespace PM2.GameContent.Game
         // Create
         internal void CreatePancake(Vector2 position)
         {
-            Pancake p = new Pancake(new BodyData() { Position = position * _world.WorldSize },
+            Pancake p = new Pancake(new BodyData() { StartPosition = position * _world.WorldSize },
                                     1.0f - (float)_random.NextDouble() * 0.25f);
 
             _world.Entities.Add(p);
         }
         internal void CreateBatter(Vector2 position)
         {
-            Batter b = new Batter(new BodyData() { Position = position * _world.WorldSize },
+            Batter b = new Batter(new BodyData() { StartPosition = position * _world.WorldSize },
                                   1.0f - (float)_random.NextDouble() * 0.25f);
 
             _world.Entities.Add(b);
@@ -131,16 +131,25 @@ namespace PM2.GameContent.Game
 
             // Randomize side
             int side = -1;
-            if (_random.Next(1) == 1)
+            if (_random.Next(2) == 1)
                 side = 1;
+
+            //
+            Vector2 sPos = new Vector2(0.05f, 0f) * scale;
+            Vector2 sVel = new Vector2(0.05f, 0.02f) * scale;
+
+            if (side == 1)
+            {
+                sPos = scale - sPos;
+                sVel = -sVel;
+            }
 
             // Create batter
             int length = 10 + _random.Next(5);
             for (int i = 0; i < length; i++)
             {
                 // Create batter
-                Batter b = new Batter(new BodyData() { Position = ( new Vector2(0.01f, 0f)) * scale * side ,
-                                                       Velocity = new Vector2(0.05f * -side, 0.02f) * scale },
+                Batter b = new Batter(new BodyData() { StartPosition = sPos, StartVelocity = sVel },
                                       1.0f - (float)_random.NextDouble() * 0.25f);
 
                 _world.Entities.Add(b);

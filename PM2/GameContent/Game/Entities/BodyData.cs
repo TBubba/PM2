@@ -9,22 +9,26 @@ namespace PM2.GameContent.Game.Entities
     internal class BodyData
     {
         // Internal
-        internal Vector2 Position;
-        internal float Rotation;
-        internal Vector2 Velocity;
+        internal Vector2 StartPosition;
+        internal float StartRotation;
+        internal Vector2 StartVelocity;
+
+        internal BaseEntity Entity; // What entity this body belongs to
 
         // Constructor(s)
         internal BodyData()
         {
-            Position = new Vector2();
-            Rotation = 0f;
-            Velocity = new Vector2();
+            StartPosition = new Vector2();
+            StartRotation = 0f;
+            StartVelocity = new Vector2();
+            Entity = null;
         }
         internal BodyData(BodyData data)
         {
-            Position = data.Position;
-            Rotation = data.Rotation;
-            Velocity = data.Velocity;
+            StartPosition = data.StartPosition;
+            StartRotation = data.StartRotation;
+            StartVelocity = data.StartVelocity;
+            Entity = data.Entity;
         }
     }
 }
